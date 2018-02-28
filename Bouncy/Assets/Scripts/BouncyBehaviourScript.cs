@@ -1,39 +1,43 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections;
 
 public class BouncyBehaviourScript : MonoBehaviour {
     public int speed;
-    Vector2 movement;
+    public Rigidbody2D ballrigi;
+    public bool isGrounded;
     // Use this for initialization
     void Start () {
-	
+        ballrigi = GetComponent<Rigidbody2D>();
+        speed = 5;
 	}
 
     // Update is called once per frame
-    void Update() { 
-    
-
-        Rigidbody2D move = GetComponent<Rigidbody2D>();
-        movement=new Vector2();
-        if(Input.GetKey("left")){
-            movement = new Vector2(-1, 0);
-            move.AddForce (movement * speed);
-            //move.velocity = movement * speed;
-
-        }
-        else if (Input.GetKey("right"))
+    void Update() {
+        if (Input.GetButtonDown("Jump") && isGrounded)
         {
-            movement = new Vector2(1, 0);
-            move.AddForce(movement * speed);
-
-            //move.velocity = movement * speed;
-
+            ballrigi.AddForce(Vector2.up * 10, ForceMode2D.Impulse);
         }
-        else
-        {
-            move.AddForce(movement * speed * -1);
-            movement = new Vector2(0, 0);
-        }
+
+
 
     }
+    void FixedUpdate()
+    {
+        float v = Input.GetAxisRaw("Horizontal");
+        ballrigi.velocity = new Vector2(v*speed, ballrigi.velocity.y );
+       
+    }
+
+
+    void OnCollisionStay2D(Collision2D collisionInfo)
+    {
+        isGrounded = true;
+    }
+
+    void OnCollisionExit2D(Collision2D collisionInfo)
+    {
+        isGrounded = false;
+    }
+
+
 }

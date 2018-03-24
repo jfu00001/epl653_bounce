@@ -1,43 +1,52 @@
 using UnityEngine;
 using System.Collections;
 
-public class BouncyBehaviourScript : MonoBehaviour {
-    public int speed;
-    public Rigidbody2D ballrigi;
+public class BouncyBehaviourScript : MonoBehaviour
+{
+    private Rigidbody2D rb;
+
+    public float speed;
     public bool isGrounded;
+    public GameObject checkpointState;
+
     // Use this for initialization
-    void Start () {
-        ballrigi = GetComponent<Rigidbody2D>();
+    void Start()
+    {
+        rb = GetComponent<Rigidbody2D>();
         speed = 5;
-	}
+        checkpointState = gameObject;
+    }
 
     // Update is called once per frame
-    void Update() {
-        if (Input.GetButtonDown("Jump") && isGrounded)
-        {
-            ballrigi.AddForce(Vector2.up * 10, ForceMode2D.Impulse);
-        }
-
-
-
+    void Update()
+    {
     }
+
     void FixedUpdate()
     {
         float v = Input.GetAxisRaw("Horizontal");
-        ballrigi.velocity = new Vector2(v*speed, ballrigi.velocity.y );
-       
-    }
+        rb.velocity = new Vector2(v * speed, rb.velocity.y);
 
+        if (Input.GetButtonDown("Jump") && isGrounded)
+        {
+            rb.AddForce(new Vector2(0, 10), ForceMode2D.Impulse);
+        }
+    }
 
     void OnCollisionStay2D(Collision2D collisionInfo)
     {
-        isGrounded = true;
+        if (collisionInfo.gameObject.CompareTag("ground") || collisionInfo.gameObject.CompareTag("power_speed")
+            || collisionInfo.gameObject.CompareTag("pumper") || collisionInfo.gameObject.CompareTag("deflater")
+            || collisionInfo.gameObject.CompareTag("bounce_block")
+            //|| collisionInfo.gameObject.CompareTag("power_gravity") || collisionInfo.gameObject.CompareTag("power_jump")
+            )
+        {
+            isGrounded = true;
+        }
     }
 
     void OnCollisionExit2D(Collision2D collisionInfo)
     {
-        isGrounded = false;
+            isGrounded = false;
     }
-
-
 }

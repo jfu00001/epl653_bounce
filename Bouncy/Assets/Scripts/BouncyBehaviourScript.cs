@@ -29,7 +29,7 @@ public class BouncyBehaviourScript : MonoBehaviour
 
         if (Input.GetButtonDown("Jump") && isGrounded)
         {
-            rb.AddForce(new Vector2(0, 10), ForceMode2D.Impulse);
+            rb.AddForce(new Vector2(rb.velocity.x, 10), ForceMode2D.Impulse);
         }
     }
 

@@ -19,5 +19,6 @@ public class CheckpointBehaviourScript : MonoBehaviour
     {
         GetComponent<SpriteRenderer>().sprite = catched;
         other.GetComponent<BouncyBehaviourScript>().checkpointState = other.gameObject;
+        GetComponent<Collider2D>().enabled = false;
     }
 }

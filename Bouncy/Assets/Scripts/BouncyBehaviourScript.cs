@@ -7,14 +7,16 @@ public class BouncyBehaviourScript : MonoBehaviour
 
     public float speed;
     public bool isGrounded;
-    public GameObject checkpointState;
+    public Vector2 checkpointPos;
+    public Sprite checkpointSprite;
 
     // Use this for initialization
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
         speed = 5;
-        checkpointState = gameObject;
+        checkpointPos = transform.position;
+        checkpointSprite = GetComponent<SpriteRenderer>().sprite;
     }
 
     // Update is called once per frame
@@ -27,9 +29,9 @@ public class BouncyBehaviourScript : MonoBehaviour
         float v = Input.GetAxisRaw("Horizontal");
         rb.velocity = new Vector2(v * speed, rb.velocity.y);
 
-        if (Input.GetButtonDown("Jump") && isGrounded)
+        if (Input.GetButton("Jump") && isGrounded)
         {
-            rb.AddForce(new Vector2(rb.velocity.x, 10), ForceMode2D.Impulse);
+            rb.AddForce(new Vector2(0, 10), ForceMode2D.Impulse);
         }
     }
 
@@ -47,6 +49,6 @@ public class BouncyBehaviourScript : MonoBehaviour
 
     void OnCollisionExit2D(Collision2D collisionInfo)
     {
-            isGrounded = false;
+        isGrounded = false;
     }
 }

@@ -11,6 +11,9 @@ public class BouncyBehaviourScript : MonoBehaviour
     public Sprite checkpointSprite;
     public int life;
     public Sprite popSprite;
+	private int yForce = 10;
+	private bool colBounceBlock;
+
 
     // Use this for initialization
     void Start()
@@ -36,6 +39,16 @@ public class BouncyBehaviourScript : MonoBehaviour
         {
             rb.AddForce(new Vector2(0, 10), ForceMode2D.Impulse);
         }
+
+		if(colBounceBlock)
+			if (Input.GetButton("Jump"))
+		{
+			rb.AddForce(new Vector2(0, yForce), ForceMode2D.Impulse);
+			yForce+=1;
+			colBounceBlock=false;
+		}
+
+
     }
 
     void OnCollisionStay2D(Collision2D collisionInfo)
@@ -75,6 +88,12 @@ public class BouncyBehaviourScript : MonoBehaviour
            
 
         }
+
+		if ((other.gameObject.tag == "bounce_block"))
+		{
+			colBounceBlock=true;
+		}
+
     }
 
     private IEnumerator wait(int sec)

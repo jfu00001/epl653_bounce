@@ -1,0 +1,16 @@
+-thorn collisions -> trig                                 J
+-gamemanager: life, rings left, point                     J
+-door open : rings left ,collider, collider triger        A
+-objrct behind door (trig)                                A
+-powerspeed tag                                           V
+
+-camera                                                   V
+-adroid apk                                               J
+-bouncy movement                                          V
+-bouncy colour                                            A
+-UI (pause)                                               J
+-Music (asset?))                                          A
+-leaderboard (points)                                     V
+-dyo thorn movement(trig)                                 J
+-level menu (scene)                                       A
+-win animation(particle)                                  V

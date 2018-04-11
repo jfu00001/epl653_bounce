@@ -7,39 +7,29 @@ public class GameManagerBehaviourScript : MonoBehaviour {
     public int life;
     public int ringsLeft;
     public Vector2 spawnPosition;
-	public Transform RingSet;
-	public GameObject animatorObject;
-	private int countRings;
-	private Animator gateAnimator;
+	public Transform ringSet;
+	public Animator portalAnimator;
+	private GameObject portal;
+	private Collider2D portalCollider;
+
 
 
     void Start () {
         life = 3;
-		countRings = 0;
+		ringsLeft = ringSet.childCount;
+		portal = GameObject.Find ("portal");
+		portalCollider = portal.GetComponent<Collider2D>();
 
 	}
 	
 	// Update is called once per frame
 	void Update () {
 
-		gateAnimator = animatorObject.GetComponent<Animator>();
-		
-		foreach (Transform ring in RingSet) 
-		{
-			if ((ring.GetComponent<SpriteRenderer> ().sprite.name.Equals ("ring_small_catched_top@2x")) ||
-			    (ring.GetComponent<SpriteRenderer> ().sprite.name.Equals ("ring_big_catched_top@2x")))
-				countRings += 1;
-			
+		if (ringsLeft == 0) {
+			portalAnimator.SetBool ("setActive", true);
+			portalCollider.enabled = false;
 		}
-		
-		if (RingSet.childCount == countRings)
-			gateAnimator.SetBool ("setActive", true);
-		
-		else if (countRings > RingSet.childCount)
-			countRings = 0;
+			
 
-	
 	}
-
-
 }

@@ -52,12 +52,11 @@
      <Compile Include="Assets\Scripts\DeflaterBehaviourScript.cs" />
      <Compile Include="Assets\Scripts\DyoThornBehaviourScript.cs" />
      <Compile Include="Assets\Scripts\GameManagerBehaviourScript.cs" />
-     <Compile Include="Assets\Scripts\PortalBehaviourScript.cs" />
      <Compile Include="Assets\Scripts\PowerspeedBehaviourScript.cs" />
      <Compile Include="Assets\Scripts\PumperBehaviourScript.cs" />
+     <Compile Include="Assets\Scripts\SamllRingBehaviourScript.cs" />
      <Compile Include="Assets\Scripts\SceneLoader.cs" />
      <Compile Include="Assets\Scripts\SceneLoaderWithTimer.cs" />
-     <Compile Include="Assets\Scripts\SmallRingBehaviourScript.cs" />
      <Compile Include="Assets\Scripts\bounceHomepage.cs" />
  <Reference Include="UnityEngine.UI">
  <HintPath>/Applications/Unity/Unity.app/Contents/UnityExtensions/Unity/GUISystem/UnityEngine.UI.dll</HintPath>

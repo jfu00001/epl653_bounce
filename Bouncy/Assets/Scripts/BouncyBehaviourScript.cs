@@ -4,16 +4,18 @@ using System.Collections;
 public class BouncyBehaviourScript : MonoBehaviour
 {
     private Rigidbody2D rb;
+    public LayerMask groundLayer, environmentLayer;
 
     public float speed;
-    public bool isGrounded;
+
     public Vector2 checkpointPos;
     public Sprite checkpointSprite;
+
     public int life;
     public Sprite popSprite;
-	private int yForce = 10;
-	private bool colBounceBlock;
 
+    private int yForce = 50;
+    private bool colBounceBlock, onRing;
 
     // Use this for initialization
     void Start()
@@ -23,61 +25,96 @@ public class BouncyBehaviourScript : MonoBehaviour
         life = 3;
         checkpointPos = transform.position;
         checkpointSprite = GetComponent<SpriteRenderer>().sprite;
+
+        onRing = false;
+        colBounceBlock = false;
     }
 
     // Update is called once per frame
-    void Update()
-    {
-    }
+    void Update() { }
 
     void FixedUpdate()
     {
-        float v = Input.GetAxisRaw("Horizontal");
-        rb.velocity = new Vector2(v * speed, rb.velocity.y);
+        rb.velocity = new Vector2(Input.GetAxis("Horizontal") * speed, rb.velocity.y);
+        Collider2D playerCollider = this.GetComponent<CircleCollider2D>();
 
-        if (Input.GetButton("Jump") && isGrounded)
+        bool jump = Input.GetButton("Jump");
+        if (onRing && jump)
         {
-            rb.AddForce(new Vector2(0, 10), ForceMode2D.Impulse);
+            yForce = 10;
+            rb.AddForce(new Vector2(0, yForce), ForceMode2D.Impulse);
+            onRing = false;
         }
 
-		if(colBounceBlock)
-			if (Input.GetButton("Jump"))
-		{
-			rb.AddForce(new Vector2(0, yForce), ForceMode2D.Impulse);
-			yForce+=1;
-			colBounceBlock=false;
-		}
-
-
-    }
-
-    void OnCollisionStay2D(Collision2D collisionInfo)
-    {
-        if (collisionInfo.gameObject.CompareTag("ground") || collisionInfo.gameObject.CompareTag("power_speed")
-            || collisionInfo.gameObject.CompareTag("pumper") || collisionInfo.gameObject.CompareTag("deflater")
-            || collisionInfo.gameObject.CompareTag("bounce_block")
-            //|| collisionInfo.gameObject.CompareTag("power_gravity") || collisionInfo.gameObject.CompareTag("power_jump")
-            )
+        if (IsGrounded(playerCollider) && jump)
         {
-            isGrounded = true;
+            if (colBounceBlock)
+            {
+                rb.AddForce(new Vector2(0, yForce), ForceMode2D.Impulse);
+                yForce += 1;
+                colBounceBlock = false;
+            }
+            else
+            {
+                yForce = 10;
+                rb.AddForce(new Vector2(0, yForce), ForceMode2D.Impulse);
+            }
         }
+
+        environmentCollisionCheck(playerCollider);
     }
 
-    void OnCollisionExit2D(Collision2D collisionInfo)
+    public bool IsGrounded(Collider2D playerCollider)
     {
-        isGrounded = false;
+        Vector2 position = transform.position;
+        Vector2 direction = Vector2.down;
+        float distance = playerCollider.bounds.extents.y + 0.1f;
+        // check for collition with ground (below us)
+        RaycastHit2D r = Physics2D.Raycast(position, direction, distance, groundLayer);
+        if (r)
+        {
+            if (r.collider.CompareTag("bounce_block"))
+            {
+                colBounceBlock = true;
+            }
+        }
+        return r;
+    }
+    private void environmentCollisionCheck(Collider2D playerCollider)
+    {
+        // Get velocity and Collider bounds
+        Vector2 moveDirection = new Vector2(rb.velocity.x, rb.velocity.y) * Time.fixedDeltaTime;
+        Vector2 bottomLeft = new Vector2(playerCollider.bounds.min.x, playerCollider.bounds.min.y);
+        Vector2 topRight = new Vector2(playerCollider.bounds.max.x, playerCollider.bounds.max.y);
+
+        // Move collider in direction that we are moving
+        bottomLeft += moveDirection;
+        topRight += moveDirection;
+
+        // if movement will result in a collision, stop it
+        if (Physics2D.OverlapArea(bottomLeft, topRight, environmentLayer))
+        {
+            rb.velocity = new Vector2(0, rb.velocity.y);
+        }
     }
 
     void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.gameObject.CompareTag("Life")){
+        if (other.gameObject.CompareTag("Life"))
+        {
             other.gameObject.SetActive(false);
             life++;
         }
     }
+    void OnCollisionStay2D(Collision2D collision)
+    {
+        if (collision.gameObject.CompareTag("ring"))
+        {
+            onRing = true;
+        }
+    }
     void OnCollisionEnter2D(Collision2D other)
     {
-
         if (other.gameObject.tag == "thorn")
         {
             GetComponent<Collider2D>().enabled = false;
@@ -85,17 +122,8 @@ public class BouncyBehaviourScript : MonoBehaviour
             life--;
             this.GetComponent<SpriteRenderer>().sprite = popSprite;
             StartCoroutine(wait(2));
-           
-
         }
-
-		if ((other.gameObject.tag == "bounce_block"))
-		{
-			colBounceBlock=true;
-		}
-
     }
-
     private IEnumerator wait(int sec)
     {
         float oldS = speed;

@@ -13,7 +13,12 @@ public class PowerspeedBehaviourScript : MonoBehaviour
     // Use this for initialization
     void Start()
     {
-        bouncy = GameObject.Find("BouncyBig");
+        bouncy = GameObject.FindGameObjectWithTag("BouncyBig");
+        // if doesn't exists find bouncy small
+        if (!bouncy)
+        {
+            bouncy = GameObject.FindGameObjectWithTag("BouncySmall");
+        }
         oldSpeed = bouncy.GetComponent<BouncyBehaviourScript>().speed;
         newSpeed = oldSpeed * 1.5f;
         timeAmt = 10;
@@ -26,6 +31,19 @@ public class PowerspeedBehaviourScript : MonoBehaviour
         {
             time -= Time.deltaTime;
             bar.fillAmount = time / timeAmt;
+
+            bouncy = GameObject.FindGameObjectWithTag("BouncyBig");
+            // if doesn't exists find bouncy small
+            if (!bouncy)
+            {
+                bouncy = GameObject.FindGameObjectWithTag("BouncySmall");
+            }
+
+            // fix bouncy speed if it has size
+            if (bouncy.GetComponent<BouncyBehaviourScript>().speed != newSpeed)
+            {
+                bouncy.GetComponent<BouncyBehaviourScript>().speed = newSpeed;
+            }
 
             if (time <= 0)
             {

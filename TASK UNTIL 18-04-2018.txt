@@ -1,16 +1,18 @@
 -thorn collisions -> trig                                 J
 -gamemanager: life, rings left, point                     J
--door open : rings left ,collider, collider triger        A
--objrct behind door (trig)                                A
--powerspeed tag                                           V
-
--camera                                                   V
--adroid apk                                               J
--bouncy movement                                          V
--bouncy colour                                            A
+-dyo_thorn movement(trig)                                 J
+-android apk                                              J
 -UI (pause)                                               J
--Music (asset?))                                          A
--leaderboard (points)                                     V
--dyo thorn movement(trig)                                 J
+
+-Music (asset?)	                                          A
+-door open : rings left, collider, collider trigger       A
+-object behind door (trig)                                A
+-bouncy colour                                            A
 -level menu (scene)                                       A
+
+-leaderboard (points)                                     V
 -win animation(particle)                                  V
+-power_speed tag                                          V - done
+-camera                                                   V - done (?)
+-bouncy movement                                          V - bug(gravity-gonies, jump when small, bounce on powerUps)
+-water													  V - done

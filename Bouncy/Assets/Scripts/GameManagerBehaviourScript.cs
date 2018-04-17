@@ -8,32 +8,58 @@ public class GameManagerBehaviourScript : MonoBehaviour
     public int life;
     public int ringsLeft;
     public Vector2 spawnPosition;
-    public Transform RingSet;
-    public GameObject animatorObject;
-    private int countRings;
-    private Animator gateAnimator;
+    public Transform ringSet;
+    
+    public GameObject Bouncy;
+    private BouncyBehaviourScript bouncyScript;
+    public GameObject levelFail;
+    public Animator gateAnimator;
+    private GameObject gate;
+    private Collider2D gateCollider;
 
     void Start()
     {
         life = 3;
-        countRings = 0;
+        ringsLeft = ringSet.childCount;
+        gate = GameObject.Find ("portal");
+        gateCollider = gate.GetComponent<Collider2D>();
+        bouncyScript = Bouncy.GetComponent<BouncyBehaviourScript>();
+        
     }
 
     // Update is called once per frame
     void Update()
     {
-        gateAnimator = animatorObject.GetComponent<Animator>();
-
-        foreach (Transform ring in RingSet)
+        //If there are no rings open the gate and disable bouncy
+        if (ringsLeft == 0) 
         {
-            if ((ring.GetComponent<SpriteRenderer>().sprite.name.Equals("ring_small_catched_top@2x")) ||
-                (ring.GetComponent<SpriteRenderer>().sprite.name.Equals("ring_big_catched_top@2x")))
-                countRings += 1;
+            gateAnimator.SetBool ("setActive", true);
+            gateCollider.enabled = false;
         }
 
-        if (RingSet.childCount == countRings)
-            gateAnimator.SetBool("setActive", true);
-        else if (countRings > RingSet.childCount)
-            countRings = 0;
+        if (bouncyScript.life == 0) 
+        {
+            levelFail.SetActive (true);
+            bouncyScript.speed = 0;
+            
+        }
+    
+    }
+
+     //UI Buttons
+    public void NextLevelButton()
+    {
+        Application.LoadLevel(Application.loadedLevel +1);
+    }
+
+    public void ReplayLevelButton()
+    {
+        Application.LoadLevel(Application.loadedLevel);
+    }
+
+    public void MainMenuButton()
+    {
+        Application.LoadLevel(1);
+
     }
 }

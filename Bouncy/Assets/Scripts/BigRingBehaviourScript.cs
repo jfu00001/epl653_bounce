@@ -9,6 +9,7 @@ public class BigRingBehaviourScript : MonoBehaviour
     public bool isEnable;
     public GameObject gameManager;
     private GameManagerBehaviourScript gameManScript;
+    public AudioClip ringSoundEffect;  
 
     void Start()
     {
@@ -22,7 +23,11 @@ public class BigRingBehaviourScript : MonoBehaviour
     void OnTriggerEnter2D(Collider2D other)
     {
         if (isEnable)
+        {
+            GetComponent<AudioSource> ().clip = ringSoundEffect;
+            GetComponent<AudioSource> ().Play ();
             gameManScript.ringsLeft--;
+        }
         isEnable = false;
         this.GetComponent<SpriteRenderer>().sprite = rTop;
         this.gameObject.transform.GetChild(0).GetComponent<SpriteRenderer>().sprite = rBot;

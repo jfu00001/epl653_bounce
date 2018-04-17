@@ -13,3 +13,6 @@ Cmd: compileSnippet
   api=9 type=0 insize=2504 outsize=7476 kw= pd=UNITY_NO_DXT5nm UNITY_NO_RGBM UNITY_NO_SCREENSPACE_SHADOWS UNITY_NO_LINEAR_COLORSPACE ok=1
 Cmd: compileSnippet
   api=9 type=1 insize=2504 outsize=7 kw= pd=UNITY_NO_DXT5nm UNITY_NO_RGBM UNITY_NO_SCREENSPACE_SHADOWS UNITY_NO_LINEAR_COLORSPACE ok=1
+End of pipe
+
+Quitting shader compiler process

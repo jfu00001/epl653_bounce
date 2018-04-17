@@ -4,6 +4,8 @@ using System.Collections;
 public class DeflaterBehaviourScript : MonoBehaviour
 {
     public Transform prefab;
+    public AudioClip shrinkSoundEffect; 
+
 
     void Start() { }
 
@@ -14,6 +16,8 @@ public class DeflaterBehaviourScript : MonoBehaviour
 
         if (other.gameObject.tag == "BouncyBig")
         {
+            GetComponent<AudioSource> ().clip = shrinkSoundEffect;
+            GetComponent<AudioSource> ().Play ();
             //Instantiate first to get the position of the previous object
             Instantiate(prefab, other.gameObject.transform.position, other.gameObject.transform.rotation);
             Destroy(other.gameObject);

@@ -4,6 +4,7 @@ using System.Collections;
 public class PumperBehaviourScript : MonoBehaviour
 {
     public Transform prefab;
+    public AudioClip enlargeSoundEffect; 
 
     void Start() { }
 
@@ -14,6 +15,8 @@ public class PumperBehaviourScript : MonoBehaviour
 
         if (other.gameObject.tag == "BouncySmall")
         {
+            GetComponent<AudioSource> ().clip = enlargeSoundEffect;
+            GetComponent<AudioSource> ().Play ();
             //Instantiate first to get the position of the previous object
             Instantiate(prefab, other.gameObject.transform.position, other.gameObject.transform.rotation);
             Destroy(other.gameObject);

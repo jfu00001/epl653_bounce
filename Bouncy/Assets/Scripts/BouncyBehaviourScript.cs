@@ -17,6 +17,12 @@ public class BouncyBehaviourScript : MonoBehaviour
     private int yForce = 50;
     private bool colBounceBlock, onRing;
 
+    public AudioClip collectableSoundEffect; 
+    public AudioClip dieSoundEffect; 
+    public AudioClip shrinkSoundEffect; 
+    public AudioClip enlargeSoundEffect;
+
+
     // Use this for initialization
     void Start()
     {
@@ -102,9 +108,17 @@ public class BouncyBehaviourScript : MonoBehaviour
     {
         if (other.gameObject.CompareTag("Life"))
         {
+
+            playSound(collectableSoundEffect);
             other.gameObject.SetActive(false);
             life++;
         }
+
+         if (other.gameObject.tag == "checkpoint")
+         {
+            playSound(collectableSoundEffect);
+           
+         }
     }
     void OnCollisionStay2D(Collision2D collision)
     {
@@ -117,12 +131,15 @@ public class BouncyBehaviourScript : MonoBehaviour
     {
         if (other.gameObject.tag == "thorn")
         {
+            playSound(dieSoundEffect);
             GetComponent<Collider2D>().enabled = false;
             rb.isKinematic = true;
             life--;
             this.GetComponent<SpriteRenderer>().sprite = popSprite;
             StartCoroutine(wait(2));
         }
+
+        
     }
     private IEnumerator wait(int sec)
     {
@@ -138,5 +155,12 @@ public class BouncyBehaviourScript : MonoBehaviour
         rb.isKinematic = false;
         GetComponent<Collider2D>().enabled = true;
         speed = os;
+    }
+
+    void playSound(AudioClip nameSound)
+    {
+        GetComponent<AudioSource> ().clip = nameSound;
+        GetComponent<AudioSource> ().Play ();
+
     }
 }

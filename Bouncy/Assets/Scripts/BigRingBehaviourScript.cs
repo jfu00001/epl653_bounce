@@ -7,13 +7,14 @@ public class BigRingBehaviourScript : MonoBehaviour
     public Sprite rTop;
     public Sprite rBot;
     public bool isEnable;
-    public GameObject gameManager;
+    private GameObject gameManager;
     private GameManagerBehaviourScript gameManScript;
     public AudioClip ringSoundEffect;  
 
     void Start()
     {
         isEnable = true;
+        gameManager = GameObject.Find("GameManager");
         gameManScript = gameManager.GetComponent<GameManagerBehaviourScript>();
     }
 
@@ -24,8 +25,8 @@ public class BigRingBehaviourScript : MonoBehaviour
     {
         if (isEnable)
         {
-            GetComponent<AudioSource> ().clip = ringSoundEffect;
-            GetComponent<AudioSource> ().Play ();
+            //GetComponent<AudioSource> ().clip = ringSoundEffect;
+            //GetComponent<AudioSource> ().Play ();
             gameManScript.ringsLeft--;
         }
         isEnable = false;

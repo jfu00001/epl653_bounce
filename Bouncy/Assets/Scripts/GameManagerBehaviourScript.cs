@@ -8,6 +8,7 @@ public class GameManagerBehaviourScript : MonoBehaviour
     public int life;
     public int ringsLeft;
     public Vector2 spawnPosition;
+    public Vector2 checkpoint;
     public Transform ringSet;
     
     public GameObject Bouncy;
@@ -62,7 +63,7 @@ public class GameManagerBehaviourScript : MonoBehaviour
             gateCollider.enabled = false;
         }
 
-        if (bouncyScript.life == 0) 
+        if (life == 0) 
         {
             levelFail.SetActive (true);
             bouncyScript.speed = 0;

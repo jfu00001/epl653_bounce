@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections;
+using UnityStandardAssets.CrossPlatformInput;
 
 public class BouncyBehaviourScript : MonoBehaviour
 {
@@ -8,10 +9,8 @@ public class BouncyBehaviourScript : MonoBehaviour
 
     public float speed;
 
-    public Vector2 checkpointPos;
     public Sprite checkpointSprite;
 
-    public int life;
     public Sprite popSprite;
 
     private int yForce = 50;
@@ -22,18 +21,27 @@ public class BouncyBehaviourScript : MonoBehaviour
     public AudioClip shrinkSoundEffect; 
     public AudioClip enlargeSoundEffect;
 
+    private GameObject gameManager;
+    private GameManagerBehaviourScript gmScript;
+
+
 
     // Use this for initialization
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
         speed = 5;
-        life = 3;
-        checkpointPos = transform.position;
+
         checkpointSprite = GetComponent<SpriteRenderer>().sprite;
 
         onRing = false;
         colBounceBlock = false;
+        gameManager = GameObject.Find("GameManager");
+        gmScript = gameManager.GetComponent<GameManagerBehaviourScript>();
+
+        gmScript.spawnPosition = transform.position;
+        gmScript.checkpoint = Vector2.zero;
+
     }
 
     // Update is called once per frame
@@ -41,10 +49,14 @@ public class BouncyBehaviourScript : MonoBehaviour
 
     void FixedUpdate()
     {
-        rb.velocity = new Vector2(Input.GetAxis("Horizontal") * speed, rb.velocity.y);
+        //rb.velocity = new Vector2(Input.GetAxis("Horizontal") * speed, rb.velocity.y);
+        rb.velocity = new Vector2(CrossPlatformInputManager.GetAxis("Horizontal") * speed, rb.velocity.y);
+
         Collider2D playerCollider = this.GetComponent<CircleCollider2D>();
 
-        bool jump = Input.GetButton("Jump");
+        //bool jump = Input.GetButton("Jump");
+        bool jump = CrossPlatformInputManager.GetButtonDown("Jump");
+
         if (onRing && jump)
         {
             yForce = 10;
@@ -111,7 +123,7 @@ public class BouncyBehaviourScript : MonoBehaviour
 
             playSound(collectableSoundEffect);
             other.gameObject.SetActive(false);
-            life++;
+            gmScript.life++;
         }
 
          if (other.gameObject.tag == "checkpoint")
@@ -134,7 +146,7 @@ public class BouncyBehaviourScript : MonoBehaviour
             playSound(dieSoundEffect);
             GetComponent<Collider2D>().enabled = false;
             rb.isKinematic = true;
-            life--;
+            gmScript.life--;
             this.GetComponent<SpriteRenderer>().sprite = popSprite;
             StartCoroutine(wait(2));
         }
@@ -150,14 +162,21 @@ public class BouncyBehaviourScript : MonoBehaviour
     }
     void respawn(float os)
     {
-        transform.position = checkpointPos;
+        if (gmScript.checkpoint == Vector2.zero)
+        {
+            transform.position = gmScript.spawnPosition;
+        }
+        else
+        {
+            transform.position = gmScript.checkpoint;
+        }
         this.GetComponent<SpriteRenderer>().sprite = checkpointSprite;
         rb.isKinematic = false;
         GetComponent<Collider2D>().enabled = true;
         speed = os;
     }
 
-    void playSound(AudioClip nameSound)
+    public void playSound(AudioClip nameSound)
     {
         GetComponent<AudioSource> ().clip = nameSound;
         GetComponent<AudioSource> ().Play ();

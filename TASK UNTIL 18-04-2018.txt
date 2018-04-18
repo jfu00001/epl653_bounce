@@ -1,8 +1,8 @@
--thorn collisions -> trig                                 J
--gamemanager: life, rings left, point                     J
--dyo_thorn movement(trig)                                 J
--android apk                                              J
--UI (pause)                                               J
+-thorn collisions -> trig                                 J - ok
+-gamemanager: life, rings left, point                     J - ok
+-dyo_thorn movement(trig)                                 J 
+-android apk                                              J - ok
+-UI (pause,movement)                                      J - movement ok, pause no
 
 -Music (asset?)	                                          A
 -door open : rings left, collider, collider trigger       A

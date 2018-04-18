@@ -4,9 +4,14 @@ using System.Collections;
 public class CheckpointBehaviourScript : MonoBehaviour
 {
     public Sprite catched;
+    private GameObject gameManager;
+    private GameManagerBehaviourScript gmScript;
 
     // Use this for initialization
-    void Start() { }
+    void Start() {
+        gameManager = GameObject.Find("GameManager");
+        gmScript = gameManager.GetComponent<GameManagerBehaviourScript>();
+    }
 
     // Update is called once per frame
     void Update() { }
@@ -14,7 +19,8 @@ public class CheckpointBehaviourScript : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D other)
     {
         GetComponent<SpriteRenderer>().sprite = catched;
-        other.GetComponent<BouncyBehaviourScript>().checkpointPos = transform.position;
+        gmScript.checkpoint = transform.position;
+
         other.GetComponent<BouncyBehaviourScript>().checkpointSprite = other.GetComponent<SpriteRenderer>().sprite;
         GetComponent<Collider2D>().enabled = false;
     }

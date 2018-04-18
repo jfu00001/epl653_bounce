@@ -13,17 +13,42 @@ public class GameManagerBehaviourScript : MonoBehaviour
     public GameObject Bouncy;
     private BouncyBehaviourScript bouncyScript;
     public GameObject levelFail;
+
     public Animator gateAnimator;
     private GameObject gate;
     private Collider2D gateCollider;
+
+    private GameObject BouncyHome;
+    private SpriteRenderer BouncySRender;
+    private SpriteRenderer BouncyHomeSRender;
 
     void Start()
     {
         life = 3;
         ringsLeft = ringSet.childCount;
+
         gate = GameObject.Find ("portal");
         gateCollider = gate.GetComponent<Collider2D>();
+
         bouncyScript = Bouncy.GetComponent<BouncyBehaviourScript>();
+        BouncySRender= Bouncy.GetComponent<SpriteRenderer>();
+
+        BouncyHome= GameObject.Find("BouncyHome");
+        BouncyHomeSRender = BouncyHome.GetComponent<SpriteRenderer> ();
+        //Check if the Bouncy is big and load the appropriate sprite
+        if (Bouncy.tag == "BouncyBig") 
+        {
+            
+            BouncySRender.sprite = BouncyHome.transform.GetChild(0).gameObject.GetComponent<SpriteRenderer>().sprite;
+        }
+        else 
+        {
+
+            BouncySRender.sprite = BouncyHomeSRender.sprite;
+        }
+
+    
+        BouncyHomeSRender.enabled= false;
         
     }
 

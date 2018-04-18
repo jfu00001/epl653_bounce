@@ -42,7 +42,7 @@ public class GateBehaviourScript : MonoBehaviour
 			UIStar.GetComponent<Image>().color= myColor;
 
 		}
-
+        
 		levelComplete.SetActive(true);
 		bouncyScript.speed = 0;
 	

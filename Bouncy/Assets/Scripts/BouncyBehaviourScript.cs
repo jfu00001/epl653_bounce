@@ -85,10 +85,16 @@ public class BouncyBehaviourScript : MonoBehaviour
     public bool IsGrounded(Collider2D playerCollider)
     {
         Vector2 position = transform.position;
-        Vector2 direction = Vector2.down;
+        Vector2 directiond = Vector2.down;
+        Vector2 directionrd = new Vector2(1, -1);
+        Vector2 directionld = new Vector2(-1, -1);
+
         float distance = playerCollider.bounds.extents.y + 0.1f;
         // check for collition with ground (below us)
-        RaycastHit2D r = Physics2D.Raycast(position, direction, distance, groundLayer);
+        RaycastHit2D r = Physics2D.Raycast(position, directiond, distance, groundLayer);
+        RaycastHit2D rl = Physics2D.Raycast(position, directionld, distance, groundLayer);
+        RaycastHit2D rr = Physics2D.Raycast(position, directionrd, distance, groundLayer);
+
         if (r)
         {
             if (r.collider.CompareTag("bounce_block"))
@@ -96,7 +102,7 @@ public class BouncyBehaviourScript : MonoBehaviour
                 colBounceBlock = true;
             }
         }
-        return r;
+        return (r||rl|| rr);
     }
     private void environmentCollisionCheck(Collider2D playerCollider)
     {

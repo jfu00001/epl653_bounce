@@ -7,12 +7,12 @@
 -Music (asset?, backround)	                              A
 -door open : rings left, collider, collider trigger       A - done
 -object behind door (trig)                                A - done
--bouncy colour                                            A - when councy loss
+-bouncy colour                                            A - when bouncy loss
 -level menu (scene)                                       A - 
 
 -leaderboard (points)                                     V
 -win animation(particle)                                  V
 -power_speed tag                                          V - done
 -camera                                                   V - done (?)
--bouncy movement                                          V - bug(gravity-gonies, jump when small, bounce on powerUps)
--water													                          V - done
+-bouncy movement                                          V - bug(jump when small, bounce on powerUps)
+-water													  V - done

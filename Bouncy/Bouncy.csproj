@@ -77,19 +77,36 @@
   <ItemGroup>
     <Compile Include="Assets\Scripts\BigRingBehaviourScript.cs" />
     <Compile Include="Assets\Scripts\BouncyBehaviourScript.cs" />
+    <Compile Include="Assets\Scripts\BouncyBigSpritesBehaviourScript.cs" />
     <Compile Include="Assets\Scripts\CameraMovement.cs" />
     <Compile Include="Assets\Scripts\CheckpointBehaviourScript.cs" />
     <Compile Include="Assets\Scripts\DeflaterBehaviourScript.cs" />
     <Compile Include="Assets\Scripts\DyoThornBehaviourScript.cs" />
     <Compile Include="Assets\Scripts\GameManagerBehaviourScript.cs" />
+    <Compile Include="Assets\Scripts\GateBehaviourScript.cs" />
     <Compile Include="Assets\Scripts\PowerspeedBehaviourScript.cs" />
     <Compile Include="Assets\Scripts\PumperBehaviourScript.cs" />
     <Compile Include="Assets\Scripts\SamllRingBehaviourScript.cs" />
     <Compile Include="Assets\Scripts\SceneLoader.cs" />
     <Compile Include="Assets\Scripts\SceneLoaderWithTimer.cs" />
+    <Compile Include="Assets\Scripts\Standard Assets\CrossPlatformInput\Scripts\AxisTouchButton.cs" />
+    <Compile Include="Assets\Scripts\Standard Assets\CrossPlatformInput\Scripts\ButtonHandler.cs" />
+    <Compile Include="Assets\Scripts\Standard Assets\CrossPlatformInput\Scripts\CrossPlatformInputManager.cs" />
+    <Compile Include="Assets\Scripts\Standard Assets\CrossPlatformInput\Scripts\InputAxisScrollbar.cs" />
+    <Compile Include="Assets\Scripts\Standard Assets\CrossPlatformInput\Scripts\Joystick.cs" />
+    <Compile Include="Assets\Scripts\Standard Assets\CrossPlatformInput\Scripts\MobileControlRig.cs" />
+    <Compile Include="Assets\Scripts\Standard Assets\CrossPlatformInput\Scripts\PlatformSpecific\MobileInput.cs" />
+    <Compile Include="Assets\Scripts\Standard Assets\CrossPlatformInput\Scripts\PlatformSpecific\StandaloneInput.cs" />
+    <Compile Include="Assets\Scripts\Standard Assets\CrossPlatformInput\Scripts\TiltInput.cs" />
+    <Compile Include="Assets\Scripts\Standard Assets\CrossPlatformInput\Scripts\TouchPad.cs" />
+    <Compile Include="Assets\Scripts\Standard Assets\CrossPlatformInput\Scripts\VirtualInput.cs" />
     <Compile Include="Assets\Scripts\bounceHomepage.cs" />
     <Compile Include="Assets\Scripts\enterWater.cs" />
     <Compile Include="Assets\Scripts\exitWater.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Assets\Materials\NewUnlitShader.shader" />
+    <None Include="Assets\Scripts\Standard Assets\CrossPlatformInput\CrossPlatformInputGuidelines.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="GenerateTargetFrameworkMonikerAttribute" />

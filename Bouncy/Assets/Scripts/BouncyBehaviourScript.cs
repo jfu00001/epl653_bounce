@@ -30,7 +30,7 @@ public class BouncyBehaviourScript : MonoBehaviour
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
-        speed = 5;
+        speed = 50;
 
         checkpointSprite = GetComponent<SpriteRenderer>().sprite;
 

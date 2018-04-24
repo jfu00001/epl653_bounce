@@ -11,7 +11,7 @@ public class bounceHomepage : MonoBehaviour
 	private SpriteRenderer spriteChildR;
 
 	private int spriteIndex = 0;
-	private static bool created = false;
+	private bool created = false;
 
 	private BouncyBigSpritesBehaviourScript bouncySpriteScript;
 

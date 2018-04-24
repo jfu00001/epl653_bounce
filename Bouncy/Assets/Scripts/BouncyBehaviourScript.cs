@@ -49,7 +49,7 @@ public class BouncyBehaviourScript : MonoBehaviour
 
     void FixedUpdate()
     {
-        //rb.velocity = new Vector2(Input.GetAxis("Horizontal") * speed, rb.velocity.y);
+        rb.velocity = new Vector2(Input.GetAxis("Horizontal") * speed, rb.velocity.y);
         rb.velocity = new Vector2(CrossPlatformInputManager.GetAxis("Horizontal") * speed, rb.velocity.y);
 
         Collider2D playerCollider = this.GetComponent<CircleCollider2D>();
@@ -130,13 +130,16 @@ public class BouncyBehaviourScript : MonoBehaviour
             playSound(collectableSoundEffect);
             other.gameObject.SetActive(false);
             gmScript.life++;
+            gmScript.points += 1000;
         }
 
          if (other.gameObject.tag == "checkpoint")
          {
             playSound(collectableSoundEffect);
-           
-         }
+            gmScript.points += 500;
+
+
+        }
     }
     void OnCollisionStay2D(Collision2D collision)
     {

@@ -1,8 +1,8 @@
 -thorn collisions -> trig                                 J - ok
--gamemanager: life, rings left, point                     J - ok (points)
+-gamemanager: life, rings left, point                     J - ok 
 -android apk                                              J - ok
--UI (pause, points, life rings left)                      J 
--android only landscape                                   J
+-UI (pause, points, life rings left)                      J - ok (pause and rings left undone)
+-android only landscape                                   J - ok 
 
 -Music (asset?, backround)	                              A
 -door open : rings left, collider, collider trigger       A - done

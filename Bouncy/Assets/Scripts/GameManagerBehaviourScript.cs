@@ -1,4 +1,6 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
+
 using System.Collections;
 
 public class GameManagerBehaviourScript : MonoBehaviour
@@ -7,6 +9,7 @@ public class GameManagerBehaviourScript : MonoBehaviour
     // Use this for initialization
     public int life;
     public int ringsLeft;
+    public int points;
     public Vector2 spawnPosition;
     public Vector2 checkpoint;
     public Transform ringSet;
@@ -23,10 +26,14 @@ public class GameManagerBehaviourScript : MonoBehaviour
     private SpriteRenderer BouncySRender;
     private SpriteRenderer BouncyHomeSRender;
 
+    public Text txtlifes;
+    public Text txtpoint;
+
     void Start()
     {
         life = 3;
         ringsLeft = ringSet.childCount;
+        points = 0;
 
         gate = GameObject.Find ("portal");
         gateCollider = gate.GetComponent<Collider2D>();
@@ -69,6 +76,9 @@ public class GameManagerBehaviourScript : MonoBehaviour
             bouncyScript.speed = 0;
             
         }
+        txtlifes.text = "X" + life.ToString();
+        txtpoint.text = points.ToString();
+
     
     }
 

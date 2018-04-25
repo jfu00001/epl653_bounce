@@ -14,8 +14,14 @@ public class GateBehaviourScript : MonoBehaviour
 	private GameManagerBehaviourScript gameManagerScript;
 	private GameObject gameManager;
 
-	public Sprite completeStar;
-	public Button UIStar;
+	public Sprite starSprite;
+	public Button firstStar;
+	public Button secondStar;
+	public Button thirdStar;
+
+	private GameObject rings;
+	private int ringsCounter;
+
 
 	// Use this for initialization
 	void Start () 
@@ -24,6 +30,7 @@ public class GateBehaviourScript : MonoBehaviour
 		gameManager = GameObject.Find ("GameManager");
 		gameManagerScript = gameManager.GetComponent<GameManagerBehaviourScript> ();
 		bouncyScript = bouncy.GetComponent<BouncyBehaviourScript>();
+		rings= GameObject.Find ("Rings");
 	
 	}
 	
@@ -32,16 +39,38 @@ public class GateBehaviourScript : MonoBehaviour
 
 	void OnTriggerEnter2D(Collider2D other) 
 	{
-		bouncy= GameObject.FindWithTag("BouncySmall");
-		bouncyScript = bouncy.GetComponent<BouncyBehaviourScript>();
-		if (gameManagerScript.ringsLeft == 0) 
-		{
+		ringsCounter = rings.transform.childCount;
+		int tempPoints=0;
+		int.TryParse(gameManagerScript.txtpoint.text, out tempPoints);
+		print(tempPoints);
+		print(ringsCounter*500);
+		Color myColor = new Color32( 253, 255, 0, 248 ); 
 
-			Color myColor = new Color32( 253, 255, 0, 248 ); 
-			UIStar.GetComponent<Image>().sprite = completeStar;
-			UIStar.GetComponent<Image>().color= myColor;
+		if (tempPoints >= (ringsCounter*500)) 
+		{
+			firstStar.GetComponent<Image>().sprite = starSprite;
+			firstStar.GetComponent<Image>().color= myColor;
+			tempPoints = tempPoints - (ringsCounter*500);
+
+			if (tempPoints>=1000)
+			{
+			secondStar.GetComponent<Image>().sprite = starSprite;
+			secondStar.GetComponent<Image>().color= myColor;
+			tempPoints = tempPoints - 1000;
+
+			if (tempPoints>=1000)
+			{
+			thirdStar.GetComponent<Image>().sprite = starSprite;
+			thirdStar.GetComponent<Image>().color= myColor;
+
+			}
+
+			}
 
 		}
+
+
+
         
 		levelComplete.SetActive(true);
 		bouncyScript.speed = 0;

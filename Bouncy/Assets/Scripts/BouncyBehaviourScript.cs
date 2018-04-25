@@ -23,6 +23,8 @@ public class BouncyBehaviourScript : MonoBehaviour
 
     private GameObject gameManager;
     private GameManagerBehaviourScript gmScript;
+    private GameObject bouncyHome;
+    private SpriteRenderer bouncyHomeSRender;
 
 
 
@@ -41,6 +43,10 @@ public class BouncyBehaviourScript : MonoBehaviour
 
         gmScript.spawnPosition = transform.position;
         gmScript.checkpoint = Vector2.zero;
+
+        bouncyHome= GameObject.Find("BouncyHome");
+        bouncyHomeSRender = bouncyHome.GetComponent<SpriteRenderer> ();
+
 
     }
 
@@ -179,16 +185,40 @@ public class BouncyBehaviourScript : MonoBehaviour
         {
             transform.position = gmScript.checkpoint;
         }
+
         this.GetComponent<SpriteRenderer>().sprite = checkpointSprite;
         rb.isKinematic = false;
         GetComponent<Collider2D>().enabled = true;
         speed = os;
+        getBouncyTexture();
     }
 
     public void playSound(AudioClip nameSound)
     {
         GetComponent<AudioSource> ().clip = nameSound;
         GetComponent<AudioSource> ().Play ();
+
+    }
+
+    private void getBouncyTexture()
+    {
+        this.GetComponent<BouncyBehaviourScript>();
+        this.GetComponent<SpriteRenderer>();
+
+        //Check if the Bouncy is big and load the appropriate sprite
+        if (this.tag == "BouncyBig") 
+        {
+            
+            this.GetComponent<SpriteRenderer>().sprite = bouncyHome.transform.GetChild(0).gameObject.GetComponent<SpriteRenderer>().sprite;
+        }
+        else 
+        {
+            
+            this.GetComponent<SpriteRenderer>().sprite = bouncyHomeSRender.sprite;
+        }
+        
+        bouncyHomeSRender.enabled= false;
+        
 
     }
 }

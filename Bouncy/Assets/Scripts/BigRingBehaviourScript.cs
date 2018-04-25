@@ -25,8 +25,8 @@ public class BigRingBehaviourScript : MonoBehaviour
     {
         if (isEnable)
         {
-            //GetComponent<AudioSource> ().clip = ringSoundEffect;
-            //GetComponent<AudioSource> ().Play ();
+            GetComponent<AudioSource> ().clip = ringSoundEffect;
+            GetComponent<AudioSource> ().Play ();
             gameManScript.ringsLeft--;
             gameManScript.points += 500;
         }

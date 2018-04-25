@@ -29,6 +29,8 @@ public class GameManagerBehaviourScript : MonoBehaviour
     public Text txtlifes;
     public Text txtpoint;
 
+    private bool updateScore = false;
+
     void Start()
     {
         life = 3;
@@ -70,12 +72,20 @@ public class GameManagerBehaviourScript : MonoBehaviour
             gateCollider.enabled = false;
         }
 
-        if (life == 0) 
+        if (life == 0)
         {
-            levelFail.SetActive (true);
+            levelFail.SetActive(true);
             bouncyScript.speed = 0;
-            
+            // lose => add current score
+            if (!updateScore)
+            {
+                HighScoreManager._instance.SaveHighScore(points);
+                updateScore = true;
+            }
         }
+        else
+            updateScore = false;
+
         txtlifes.text = "X" + life.ToString();
         txtpoint.text = points.ToString();
 
@@ -85,7 +95,13 @@ public class GameManagerBehaviourScript : MonoBehaviour
      //UI Buttons
     public void NextLevelButton()
     {
-        Application.LoadLevel(Application.loadedLevel +1);
+        int nextLevel = Application.loadedLevel + 1;
+        // game completed, add highscore
+        if (nextLevel == 5)
+        {
+            HighScoreManager._instance.SaveHighScore(points);
+        }
+        Application.LoadLevel(nextLevel);
     }
 
     public void ReplayLevelButton()
@@ -96,6 +112,7 @@ public class GameManagerBehaviourScript : MonoBehaviour
     public void MainMenuButton()
     {
         Application.LoadLevel(1);
-
+        GameObject b = GameObject.FindGameObjectWithTag("BouncyHome");
+        Destroy(b);
     }
 }

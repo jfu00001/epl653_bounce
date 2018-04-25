@@ -136,13 +136,13 @@ public class BouncyBehaviourScript : MonoBehaviour
             playSound(collectableSoundEffect);
             other.gameObject.SetActive(false);
             gmScript.life++;
-            gmScript.points += 1000;
+            gmScript.points += 1000 * gmScript.life;
         }
 
          if (other.gameObject.tag == "checkpoint")
          {
             playSound(collectableSoundEffect);
-            gmScript.points += 500;
+            gmScript.points += 500 * gmScript.life;
 
 
         }

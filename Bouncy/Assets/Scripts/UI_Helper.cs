@@ -6,7 +6,7 @@ using UnityEngine;
 public class UI_Helper : MonoBehaviour
 {
     public GameObject textTemplate;
-     
+
     void Start()
     {
         show();

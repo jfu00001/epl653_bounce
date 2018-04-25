@@ -55,13 +55,13 @@ public class BouncyBehaviourScript : MonoBehaviour
 
     void FixedUpdate()
     {
-        rb.velocity = new Vector2(Input.GetAxis("Horizontal") * speed, rb.velocity.y);
-        rb.velocity = new Vector2(CrossPlatformInputManager.GetAxis("Horizontal") * speed, rb.velocity.y);
+        //rb.velocity = new Vector2(Input.GetAxis("Horizontal") * speed, rb.velocity.y);
+        rb.velocity = new Vector2(CrossPlatformInputManager.GetAxisRaw("Horizontal") * speed, rb.velocity.y);
 
         Collider2D playerCollider = this.GetComponent<CircleCollider2D>();
 
         //bool jump = Input.GetButton("Jump");
-        bool jump = CrossPlatformInputManager.GetButtonDown("Jump");
+        bool jump = CrossPlatformInputManager.GetButton("Jump");
 
         if (onRing && jump)
         {

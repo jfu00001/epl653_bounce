@@ -28,7 +28,7 @@ public class BigRingBehaviourScript : MonoBehaviour
             GetComponent<AudioSource> ().clip = ringSoundEffect;
             GetComponent<AudioSource> ().Play ();
             gameManScript.ringsLeft--;
-            gameManScript.points += 500;
+            gameManScript.points += 500 * gameManScript.life;
         }
         isEnable = false;
         this.GetComponent<SpriteRenderer>().sprite = rTop;

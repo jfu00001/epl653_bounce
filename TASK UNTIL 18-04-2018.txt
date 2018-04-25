@@ -4,15 +4,28 @@
 -UI (pause, points, life rings left)                      J - ok (pause and rings left undone)
 -android only landscape                                   J - ok 
 
--Music (asset?, backround)	                              A
+-Music (asset?, backround)	                              A - done
 -door open : rings left, collider, collider trigger       A - done
 -object behind door (trig)                                A - done
--bouncy colour                                            A - when bouncy loss
--level menu (scene)                                       A - 
+-bouncy colour                                            A - done
+-level menu (scene)                                       A - done
 
--leaderboard (points)                                     V
+-leaderboard (points)                                     V - done
 -win animation(particle)                                  V
 -power_speed tag                                          V - done
 -camera                                                   V - done (?)
--bouncy movement                                          V - bug(jump when small, bounce on powerUps)
+-bouncy movement                                          V - done
 -water													  V - done
+
+Bugs:
+-- texture
+-- 1 star level complete, 2 star 3 lifes, lifes >= 3 + extra lifes + getAll
+-- music in object ?
+-- sum points of scenes 
+-- replay 1st level
+-- particle oti nane
+-- pause menu: restart, homepage, resume
+
+Mario:
+-- camera
+-- powerUps bounce

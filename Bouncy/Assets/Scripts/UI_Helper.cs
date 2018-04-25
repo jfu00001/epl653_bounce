@@ -14,12 +14,6 @@ public class UI_Helper : MonoBehaviour
         Destroy(b);
     }
 
-    public void add(int score)
-    {
-        HighScoreManager._instance.SaveHighScore(score);
-        show();
-    }
-
     public void clearLeaderboard()
     {
         HighScoreManager._instance.ClearLeaderBoard();

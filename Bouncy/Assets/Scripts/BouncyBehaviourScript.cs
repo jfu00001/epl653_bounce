@@ -13,7 +13,7 @@ public class BouncyBehaviourScript : MonoBehaviour
 
     public Sprite popSprite;
 
-    private int yForce = 50;
+    private int yForce = 10;
     private bool colBounceBlock, onRing;
 
     public AudioClip collectableSoundEffect; 
@@ -32,7 +32,7 @@ public class BouncyBehaviourScript : MonoBehaviour
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
-        speed = 50;
+        speed = 10;
 
         checkpointSprite = GetComponent<SpriteRenderer>().sprite;
 
@@ -41,8 +41,10 @@ public class BouncyBehaviourScript : MonoBehaviour
         gameManager = GameObject.Find("GameManager");
         gmScript = gameManager.GetComponent<GameManagerBehaviourScript>();
 
-        gmScript.spawnPosition = transform.position;
-        gmScript.checkpoint = Vector2.zero;
+        if(gmScript.spawnPosition == Vector2.zero) {
+            gmScript.spawnPosition = transform.position;
+
+        }
 
         bouncyHome= GameObject.Find("BouncyHome");
         bouncyHomeSRender = bouncyHome.GetComponent<SpriteRenderer> ();
@@ -56,8 +58,8 @@ public class BouncyBehaviourScript : MonoBehaviour
     void FixedUpdate()
     {
         //rb.velocity = new Vector2(Input.GetAxis("Horizontal") * speed, rb.velocity.y);
-        rb.velocity = new Vector2(CrossPlatformInputManager.GetAxisRaw("Horizontal") * speed, rb.velocity.y);
-
+        float t = Mathf.Round(CrossPlatformInputManager.GetAxisRaw("Horizontal"));
+        rb.velocity = new Vector2(t * speed, rb.velocity.y);
         Collider2D playerCollider = this.GetComponent<CircleCollider2D>();
 
         //bool jump = Input.GetButton("Jump");
@@ -94,13 +96,11 @@ public class BouncyBehaviourScript : MonoBehaviour
         Vector2 directiond = Vector2.down;
         Vector2 directionrd = new Vector2(1, -1);
         Vector2 directionld = new Vector2(-1, -1);
-
         float distance = playerCollider.bounds.extents.y + 0.1f;
         // check for collition with ground (below us)
         RaycastHit2D r = Physics2D.Raycast(position, directiond, distance, groundLayer);
         RaycastHit2D rl = Physics2D.Raycast(position, directionld, distance, groundLayer);
         RaycastHit2D rr = Physics2D.Raycast(position, directionrd, distance, groundLayer);
-
         if (r)
         {
             if (r.collider.CompareTag("bounce_block"))
@@ -116,7 +116,6 @@ public class BouncyBehaviourScript : MonoBehaviour
         Vector2 moveDirection = new Vector2(rb.velocity.x, rb.velocity.y) * Time.fixedDeltaTime;
         Vector2 bottomLeft = new Vector2(playerCollider.bounds.min.x, playerCollider.bounds.min.y);
         Vector2 topRight = new Vector2(playerCollider.bounds.max.x, playerCollider.bounds.max.y);
-
         // Move collider in direction that we are moving
         bottomLeft += moveDirection;
         topRight += moveDirection;
@@ -135,8 +134,8 @@ public class BouncyBehaviourScript : MonoBehaviour
 
             playSound(collectableSoundEffect);
             other.gameObject.SetActive(false);
-            gmScript.life++;
             gmScript.points += 1000 * gmScript.life;
+            gmScript.life++;
         }
 
          if (other.gameObject.tag == "checkpoint")
@@ -173,7 +172,10 @@ public class BouncyBehaviourScript : MonoBehaviour
         float oldS = speed;
         speed = 0;
         yield return new WaitForSeconds(sec);
-        respawn(oldS);
+        if (gmScript.life != 0)
+        {
+            respawn(oldS);
+        }
     }
     void respawn(float os)
     {

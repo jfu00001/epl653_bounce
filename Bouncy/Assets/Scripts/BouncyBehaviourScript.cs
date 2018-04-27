@@ -13,12 +13,12 @@ public class BouncyBehaviourScript : MonoBehaviour
 
     public Sprite popSprite;
 
-    private int yForce = 10;
+    private int yForce;
     private bool colBounceBlock, onRing;
 
-    public AudioClip collectableSoundEffect; 
-    public AudioClip dieSoundEffect; 
-    public AudioClip shrinkSoundEffect; 
+    public AudioClip collectableSoundEffect;
+    public AudioClip dieSoundEffect;
+    public AudioClip shrinkSoundEffect;
     public AudioClip enlargeSoundEffect;
 
     private GameObject gameManager;
@@ -27,12 +27,12 @@ public class BouncyBehaviourScript : MonoBehaviour
     private SpriteRenderer bouncyHomeSRender;
 
 
-
     // Use this for initialization
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
         speed = 10;
+        yForce = 10;
 
         checkpointSprite = GetComponent<SpriteRenderer>().sprite;
 
@@ -41,19 +41,18 @@ public class BouncyBehaviourScript : MonoBehaviour
         gameManager = GameObject.Find("GameManager");
         gmScript = gameManager.GetComponent<GameManagerBehaviourScript>();
 
-        if(gmScript.spawnPosition == Vector2.zero) {
+        if (gmScript.spawnPosition == Vector2.zero)
+        {
             gmScript.spawnPosition = transform.position;
-
         }
 
-        bouncyHome= GameObject.Find("BouncyHome");
-        bouncyHomeSRender = bouncyHome.GetComponent<SpriteRenderer> ();
+        bouncyHome = GameObject.Find("BouncyHome");
+        bouncyHomeSRender = bouncyHome.GetComponent<SpriteRenderer>();
 
-
+        GetComponent<Collider2D>().sharedMaterial.bounciness = 0.3f;
+        GetComponent<Collider2D>().enabled = false;
+        GetComponent<Collider2D>().enabled = true;
     }
-
-    // Update is called once per frame
-    void Update() { }
 
     void FixedUpdate()
     {
@@ -93,7 +92,7 @@ public class BouncyBehaviourScript : MonoBehaviour
     public bool IsGrounded(Collider2D playerCollider)
     {
         Vector2 position = transform.position;
-        Vector2 directiond = Vector2.down;
+        Vector2 directiond = new Vector2(0, -1);
         Vector2 directionrd = new Vector2(1, -1);
         Vector2 directionld = new Vector2(-1, -1);
         float distance = playerCollider.bounds.extents.y + 0.1f;
@@ -108,20 +107,27 @@ public class BouncyBehaviourScript : MonoBehaviour
                 colBounceBlock = true;
             }
         }
-        return (r||rl|| rr);
+        
+        return (r || rl || rr);
     }
+   
     private void environmentCollisionCheck(Collider2D playerCollider)
     {
-        // Get velocity and Collider bounds
         Vector2 moveDirection = new Vector2(rb.velocity.x, rb.velocity.y) * Time.fixedDeltaTime;
-        Vector2 bottomLeft = new Vector2(playerCollider.bounds.min.x, playerCollider.bounds.min.y);
-        Vector2 topRight = new Vector2(playerCollider.bounds.max.x, playerCollider.bounds.max.y);
+        Vector2 newPos = transform.position;
+        float distance = GetComponent<CircleCollider2D>().radius + 0.1f;
         // Move collider in direction that we are moving
-        bottomLeft += moveDirection;
-        topRight += moveDirection;
-
+        newPos += moveDirection;
         // if movement will result in a collision, stop it
-        if (Physics2D.OverlapArea(bottomLeft, topRight, environmentLayer))
+        if (Physics2D.OverlapCircle(newPos, distance, environmentLayer))
+        {
+            rb.velocity = new Vector2(0, rb.velocity.y);
+        }
+
+        // side collision with ground
+        RaycastHit2D stepR = Physics2D.Raycast(newPos, Vector2.right, distance, groundLayer);
+        RaycastHit2D stepL = Physics2D.Raycast(newPos, Vector2.left, distance, groundLayer);
+        if (stepL || stepR)
         {
             rb.velocity = new Vector2(0, rb.velocity.y);
         }
@@ -131,28 +137,40 @@ public class BouncyBehaviourScript : MonoBehaviour
     {
         if (other.gameObject.CompareTag("Life"))
         {
-
             playSound(collectableSoundEffect);
             other.gameObject.SetActive(false);
             gmScript.points += 1000 * gmScript.life;
             gmScript.life++;
         }
 
-         if (other.gameObject.tag == "checkpoint")
-         {
+        if (other.gameObject.tag == "checkpoint")
+        {
             playSound(collectableSoundEffect);
             gmScript.points += 500 * gmScript.life;
-
-
         }
     }
+
     void OnCollisionStay2D(Collision2D collision)
     {
+        GetComponent<Collider2D>().sharedMaterial.bounciness = 0;
+        if (IsGrounded(this.GetComponent<CircleCollider2D>()))
+        {
+            if (!(collision.gameObject.CompareTag("pumper") || collision.gameObject.CompareTag("power_speed") || collision.gameObject.CompareTag("deflater")))
+            {
+                GetComponent<Collider2D>().sharedMaterial.bounciness = 0.3f;
+            }
+        }
+
+        // update collider
+        GetComponent<Collider2D>().enabled = false;
+        GetComponent<Collider2D>().enabled = true;
+
         if (collision.gameObject.CompareTag("ring"))
         {
             onRing = true;
         }
     }
+
     void OnCollisionEnter2D(Collision2D other)
     {
         if (other.gameObject.tag == "thorn")
@@ -164,8 +182,6 @@ public class BouncyBehaviourScript : MonoBehaviour
             this.GetComponent<SpriteRenderer>().sprite = popSprite;
             StartCoroutine(wait(2));
         }
-
-        
     }
     private IEnumerator wait(int sec)
     {
@@ -197,9 +213,8 @@ public class BouncyBehaviourScript : MonoBehaviour
 
     public void playSound(AudioClip nameSound)
     {
-        GetComponent<AudioSource> ().clip = nameSound;
-        GetComponent<AudioSource> ().Play ();
-
+        GetComponent<AudioSource>().clip = nameSound;
+        GetComponent<AudioSource>().Play();
     }
 
     private void getBouncyTexture()
@@ -208,19 +223,15 @@ public class BouncyBehaviourScript : MonoBehaviour
         this.GetComponent<SpriteRenderer>();
 
         //Check if the Bouncy is big and load the appropriate sprite
-        if (this.tag == "BouncyBig") 
+        if (this.tag == "BouncyBig")
         {
-            
             this.GetComponent<SpriteRenderer>().sprite = bouncyHome.transform.GetChild(0).gameObject.GetComponent<SpriteRenderer>().sprite;
         }
-        else 
+        else
         {
-            
             this.GetComponent<SpriteRenderer>().sprite = bouncyHomeSRender.sprite;
         }
-        
-        bouncyHomeSRender.enabled= false;
-        
 
-    }
+        bouncyHomeSRender.enabled = false;
+   }
 }

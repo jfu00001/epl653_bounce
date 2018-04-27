@@ -10,22 +10,29 @@
 -bouncy colour                                            A - done
 -level menu (scene)                                       A - done
 
--leaderboard (points)                                     V - done
--win animation(particle)                                  V
+-leaderboard 			                                  V - done
+-many lifes particle	                                  V - done
 -power_speed tag                                          V - done
--camera                                                   V - done (?)
+-camera                                                   V - done
 -bouncy movement                                          V - done
 -water													  V - done
 
 Bugs:
--- texture
--- 1 star level complete, 2 star 3 lifes, lifes >= 3 + extra lifes + getAll
--- music in object ?
--- sum points of scenes 
--- replay 1st level
--- particle oti nane
--- pause menu: restart, homepage, resume
+- texture
+- 1 star level complete, 2 star 3 lifes, lifes >= 3 + extra lifes + getAll
+- music in object ?
+- sum points of scenes 
+- replay 1st level
+- particle oti nane 									done
+- pause menu: restart, homepage, resume
 
 Mario:
--- camera
--- powerUps bounce
+- camera
+- powerUps bounce										done
+
+New bugs:
+- movement se gonies (gravity)
+
+"Bugs" p nmz en ok:
+- no bounce when jumping on powerUps
+- bouncy stops on wall collision, no rotation if try to move to wall

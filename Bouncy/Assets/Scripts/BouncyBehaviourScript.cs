@@ -107,10 +107,10 @@ public class BouncyBehaviourScript : MonoBehaviour
                 colBounceBlock = true;
             }
         }
-        
+
         return (r || rl || rr);
     }
-   
+
     private void environmentCollisionCheck(Collider2D playerCollider)
     {
         Vector2 moveDirection = new Vector2(rb.velocity.x, rb.velocity.y) * Time.fixedDeltaTime;
@@ -129,7 +129,9 @@ public class BouncyBehaviourScript : MonoBehaviour
         RaycastHit2D stepL = Physics2D.Raycast(newPos, Vector2.left, distance, groundLayer);
         if (stepL || stepR)
         {
-            rb.velocity = new Vector2(0, rb.velocity.y);
+            GetComponent<Collider2D>().sharedMaterial.bounciness = 0;
+            GetComponent<Collider2D>().enabled = false;
+            GetComponent<Collider2D>().enabled = true;
         }
     }
 
@@ -153,12 +155,9 @@ public class BouncyBehaviourScript : MonoBehaviour
     void OnCollisionStay2D(Collision2D collision)
     {
         GetComponent<Collider2D>().sharedMaterial.bounciness = 0;
-        if (IsGrounded(this.GetComponent<CircleCollider2D>()))
+        if (IsGrounded(this.GetComponent<CircleCollider2D>()) && collision.gameObject.CompareTag("ground"))
         {
-            if (!(collision.gameObject.CompareTag("pumper") || collision.gameObject.CompareTag("power_speed") || collision.gameObject.CompareTag("deflater")))
-            {
-                GetComponent<Collider2D>().sharedMaterial.bounciness = 0.3f;
-            }
+            GetComponent<Collider2D>().sharedMaterial.bounciness = 0.3f;
         }
 
         // update collider
@@ -233,5 +232,5 @@ public class BouncyBehaviourScript : MonoBehaviour
         }
 
         bouncyHomeSRender.enabled = false;
-   }
+    }
 }

@@ -18,11 +18,11 @@
 -water													  V - done
 
 Bugs:
-- texture
-- 1 star level complete, 2 star 3 lifes, lifes >= 3 + extra lifes + getAll
-- music in object ?
-- sum points of scenes 
-- replay 1st level
+- texture								       -done
+- 1 star level complete, 2 star 3 lifes, lifes >= 3 + extra lifes + getAll     -done
+- music in object ?							       -done
+- sum points of scenes 	
+- replay 1st level							       -done
 - particle oti nane 									done
 - pause menu: restart, homepage, resume
 

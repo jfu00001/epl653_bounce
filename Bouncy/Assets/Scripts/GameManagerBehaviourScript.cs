@@ -106,7 +106,7 @@ public class GameManagerBehaviourScript : MonoBehaviour
 
     public void ReplayLevelButton()
     {
-        Application.LoadLevel(Application.loadedLevel);
+        Application.LoadLevel(2);
     }
 
     public void MainMenuButton()

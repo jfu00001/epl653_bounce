@@ -3,10 +3,16 @@ using System.Collections;
 
 public class PumperBehaviourScript : MonoBehaviour
 {
-    public Transform prefab;
+    public GameObject bouncy;
     public AudioClip enlargeSoundEffect; 
+    private GameObject BouncyHome;
 
-    void Start() { }
+    void Start() 
+    { 
+        BouncyHome = GameObject.Find("BouncyHome");
+
+
+    }
 
     void Update() { }
 
@@ -17,8 +23,9 @@ public class PumperBehaviourScript : MonoBehaviour
         {
             GetComponent<AudioSource> ().clip = enlargeSoundEffect;
             GetComponent<AudioSource> ().Play ();
+            bouncy.GetComponent<SpriteRenderer>().sprite = BouncyHome.transform.GetChild(0).gameObject.GetComponent<SpriteRenderer>().sprite;
             //Instantiate first to get the position of the previous object
-            Instantiate(prefab, other.gameObject.transform.position, other.gameObject.transform.rotation);
+            Instantiate(bouncy, other.gameObject.transform.position, other.gameObject.transform.rotation);
             Destroy(other.gameObject);
         }
     }

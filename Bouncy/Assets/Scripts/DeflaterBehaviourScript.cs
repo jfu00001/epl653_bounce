@@ -3,11 +3,16 @@ using System.Collections;
 
 public class DeflaterBehaviourScript : MonoBehaviour
 {
-    public Transform prefab;
+    public GameObject bouncy;
     public AudioClip shrinkSoundEffect; 
+    private GameObject BouncyHome;
 
 
-    void Start() { }
+    void Start() 
+    {
+        BouncyHome = GameObject.Find("BouncyHome");
+
+    }
 
     void Update() { }
 
@@ -18,8 +23,9 @@ public class DeflaterBehaviourScript : MonoBehaviour
         {
             GetComponent<AudioSource> ().clip = shrinkSoundEffect;
             GetComponent<AudioSource> ().Play ();
+            bouncy.GetComponent<SpriteRenderer>().sprite = BouncyHome.GetComponent<SpriteRenderer>().sprite;
             //Instantiate first to get the position of the previous object
-            Instantiate(prefab, other.gameObject.transform.position, other.gameObject.transform.rotation);
+            Instantiate(bouncy, other.gameObject.transform.position, other.gameObject.transform.rotation);
             Destroy(other.gameObject);
         }
     }

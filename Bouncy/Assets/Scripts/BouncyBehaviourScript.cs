@@ -25,6 +25,7 @@ public class BouncyBehaviourScript : MonoBehaviour
     private GameManagerBehaviourScript gmScript;
     private GameObject bouncyHome;
     private SpriteRenderer bouncyHomeSRender;
+    public int collisionObjects;
 
 
     // Use this for initialization
@@ -38,6 +39,9 @@ public class BouncyBehaviourScript : MonoBehaviour
 
         onRing = false;
         colBounceBlock = false;
+
+        collisionObjects = 0;
+
         gameManager = GameObject.Find("GameManager");
         gmScript = gameManager.GetComponent<GameManagerBehaviourScript>();
 
@@ -143,12 +147,14 @@ public class BouncyBehaviourScript : MonoBehaviour
             other.gameObject.SetActive(false);
             gmScript.points += 1000 * gmScript.life;
             gmScript.life++;
+            collisionObjects++;
         }
 
         if (other.gameObject.tag == "checkpoint")
         {
             playSound(collectableSoundEffect);
             gmScript.points += 500 * gmScript.life;
+            collisionObjects++;
         }
     }
 
@@ -181,6 +187,15 @@ public class BouncyBehaviourScript : MonoBehaviour
             this.GetComponent<SpriteRenderer>().sprite = popSprite;
             StartCoroutine(wait(2));
         }
+        if ((other.gameObject.tag == "pumper") || 
+            (other.gameObject.tag == "power_speed")|| 
+            (other.gameObject.tag == "deflater"))
+        {
+            collisionObjects++;
+        }
+
+
+
     }
     private IEnumerator wait(int sec)
     {

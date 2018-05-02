@@ -20,7 +20,13 @@ public class GateBehaviourScript : MonoBehaviour
 	public Button thirdStar;
 
 	private GameObject rings;
-	private int ringsCounter;
+
+	public Transform powerUps;
+	public int powerUpsNum;
+
+	private int gmLifes;
+	private bool lifeTag;
+
 
 
 	// Use this for initialization
@@ -31,39 +37,43 @@ public class GateBehaviourScript : MonoBehaviour
 		gameManagerScript = gameManager.GetComponent<GameManagerBehaviourScript> ();
 		bouncyScript = bouncy.GetComponent<BouncyBehaviourScript>();
 		rings= GameObject.Find ("Rings");
+		lifeTag = false;
+  
 	
 	}
 	
 	// Update is called once per frame
-	void Update () {}
+	void Update () 
+	{
+		gmLifes = gameManagerScript.life;
+      
+        if (gmLifes < 3)
+            lifeTag = true;
+	}
 
 	void OnTriggerEnter2D(Collider2D other) 
 	{
-		ringsCounter = rings.transform.childCount;
-		int tempPoints=0;
-		int.TryParse(gameManagerScript.txtpoint.text, out tempPoints);
-		print(tempPoints);
-		print(ringsCounter*500);
+		
 		Color myColor = new Color32( 253, 255, 0, 248 ); 
 
-		if (tempPoints >= (ringsCounter*500)) 
+		if (gameManagerScript.ringsLeft == 0) 
 		{
 			firstStar.GetComponent<Image>().sprite = starSprite;
 			firstStar.GetComponent<Image>().color= myColor;
-			tempPoints = tempPoints - (ringsCounter*500);
-
-			if (tempPoints>=1000)
+         
+			if (!lifeTag)
 			{
 			secondStar.GetComponent<Image>().sprite = starSprite;
 			secondStar.GetComponent<Image>().color= myColor;
-			tempPoints = tempPoints - 1000;
 
-			if (tempPoints>=1000)
+			
+			if (bouncyScript.collisionObjects == powerUpsNum)
 			{
 			thirdStar.GetComponent<Image>().sprite = starSprite;
 			thirdStar.GetComponent<Image>().color= myColor;
 
 			}
+            
 
 			}
 

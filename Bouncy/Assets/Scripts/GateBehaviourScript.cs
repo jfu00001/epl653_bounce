@@ -27,20 +27,18 @@ public class GateBehaviourScript : MonoBehaviour
 	private int gmLifes;
 	private bool lifeTag;
 
+    private bool saveScore;
 
-
-	// Use this for initialization
-	void Start () 
+    // Use this for initialization
+    void Start () 
 	{
-
 		gameManager = GameObject.Find ("GameManager");
 		gameManagerScript = gameManager.GetComponent<GameManagerBehaviourScript> ();
 		bouncyScript = bouncy.GetComponent<BouncyBehaviourScript>();
 		rings= GameObject.Find ("Rings");
 		lifeTag = false;
-  
-	
-	}
+        saveScore = false;
+    }
 	
 	// Update is called once per frame
 	void Update () 
@@ -52,8 +50,7 @@ public class GateBehaviourScript : MonoBehaviour
 	}
 
 	void OnTriggerEnter2D(Collider2D other) 
-	{
-		
+	{		
 		Color myColor = new Color32( 253, 255, 0, 248 ); 
 
 		if (gameManagerScript.ringsLeft == 0) 
@@ -83,7 +80,14 @@ public class GateBehaviourScript : MonoBehaviour
 
         
 		levelComplete.SetActive(true);
-		bouncyScript.speed = 0;
-	
+
+        // level 3 completed => game completed => save score
+        if (Application.loadedLevel == 4 && !saveScore)
+        {
+            HighScoreManager._instance.SaveHighScore(gameManagerScript.points);
+            saveScore = true;
+        }
+
+        bouncyScript.speed = 0;	
 	}
 }

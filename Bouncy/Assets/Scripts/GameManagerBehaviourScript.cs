@@ -96,11 +96,6 @@ public class GameManagerBehaviourScript : MonoBehaviour
     public void NextLevelButton()
     {
         int nextLevel = Application.loadedLevel + 1;
-        // game completed, add highscore
-        if (nextLevel == 5)
-        {
-            HighScoreManager._instance.SaveHighScore(points);
-        }
         Application.LoadLevel(nextLevel);
     }
 

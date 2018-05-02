@@ -3,13 +3,11 @@
 -android apk                                              J - ok
 -UI (pause, points, life rings left)                      J - ok (pause and rings left undone)
 -android only landscape                                   J - ok 
-
 -Music (asset?, backround)	                              A - done
 -door open : rings left, collider, collider trigger       A - done
 -object behind door (trig)                                A - done
 -bouncy colour                                            A - done
 -level menu (scene)                                       A - done
-
 -leaderboard 			                                  V - done
 -many lifes particle	                                  V - done
 -power_speed tag                                          V - done
@@ -27,12 +25,18 @@ Bugs:
 - pause menu: restart, homepage, resume
 
 Mario:
-- camera
+- camera												done
 - powerUps bounce										done
 
 New bugs:
-- movement se gonies (gravity)
-
+- movement se gonies 									-done
+- level 2 open gate collision sometimes fail and bouncy falls
+- an den epilekso texture sto homepage, sto level 3 p prepei na gini big 
+en exei sprite, an epilekso texture sto homepage en ok. exei 1 script 
+BouncyBigSpritesBehaviourScript p en adio btw
+- pote exoume 3 stars? os ta 2 ekatafera na piaso :p
+ 
 "Bugs" p nmz en ok:
 - no bounce when jumping on powerUps
+- bounce with rings on side collision 
 - bouncy stops on wall collision, no rotation if try to move to wall

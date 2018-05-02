@@ -52,6 +52,9 @@ public class BouncyBehaviourScript : MonoBehaviour
 
         bouncyHome = GameObject.Find("BouncyHome");
         bouncyHomeSRender = bouncyHome.GetComponent<SpriteRenderer>();
+        bouncyHome.GetComponent<Rigidbody2D>().isKinematic = true;
+        bouncyHome.GetComponent<AudioSource>().enabled = false;
+        bouncyHome.GetComponent<bounceHomepage>().enabled = false;
 
         GetComponent<Collider2D>().sharedMaterial.bounciness = 0.3f;
         GetComponent<Collider2D>().enabled = false;
@@ -67,6 +70,11 @@ public class BouncyBehaviourScript : MonoBehaviour
 
         //bool jump = Input.GetButton("Jump");
         bool jump = CrossPlatformInputManager.GetButton("Jump");
+
+        // jump and not on water
+        if (jump && rb.gravityScale > 0) { 
+            rb.gravityScale = 1;
+        }
 
         if (onRing && jump)
         {
@@ -174,6 +182,16 @@ public class BouncyBehaviourScript : MonoBehaviour
         {
             onRing = true;
         }
+
+        if (collision.gameObject.CompareTag("gonies"))
+        {
+            rb.gravityScale = 15;
+        }
+        // not on water and not on gonies
+        else if (rb.gravityScale > 0)
+        {
+            rb.gravityScale = 1;
+        }
     }
 
     void OnCollisionEnter2D(Collision2D other)
@@ -187,16 +205,15 @@ public class BouncyBehaviourScript : MonoBehaviour
             this.GetComponent<SpriteRenderer>().sprite = popSprite;
             StartCoroutine(wait(2));
         }
+
         if ((other.gameObject.tag == "pumper") || 
             (other.gameObject.tag == "power_speed")|| 
             (other.gameObject.tag == "deflater"))
         {
             collisionObjects++;
         }
-
-
-
     }
+
     private IEnumerator wait(int sec)
     {
         float oldS = speed;

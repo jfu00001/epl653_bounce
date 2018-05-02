@@ -20,6 +20,10 @@ public class CameraMovement : MonoBehaviour
         Bounds b = rnds[0].bounds;
         foreach (Renderer r in rnds)
         {
+            if (r.gameObject.CompareTag("BouncyHome"))
+            {
+                continue;
+            }
             b.Encapsulate(r.bounds);
         }
 

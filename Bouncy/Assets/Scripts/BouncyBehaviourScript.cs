@@ -153,7 +153,8 @@ public class BouncyBehaviourScript : MonoBehaviour
         {
             playSound(collectableSoundEffect);
             other.gameObject.SetActive(false);
-            gmScript.points += 1000 * gmScript.life;
+           // gmScript.points += 1000 * gmScript.life;
+            gmScript.addPoint(1000 * gmScript.life);
             gmScript.life++;
             collisionObjects++;
         }
@@ -161,7 +162,8 @@ public class BouncyBehaviourScript : MonoBehaviour
         if (other.gameObject.tag == "checkpoint")
         {
             playSound(collectableSoundEffect);
-            gmScript.points += 500 * gmScript.life;
+            //gmScript.points += 500 * gmScript.life;
+            gmScript.addPoint(500 * gmScript.life);
             collisionObjects++;
         }
     }

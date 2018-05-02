@@ -84,7 +84,7 @@ public class GateBehaviourScript : MonoBehaviour
         // level 3 completed => game completed => save score
         if (Application.loadedLevel == 4 && !saveScore)
         {
-            HighScoreManager._instance.SaveHighScore(gameManagerScript.points);
+            HighScoreManager._instance.SaveHighScore(gameManagerScript.getPoint());
             saveScore = true;
         }
 

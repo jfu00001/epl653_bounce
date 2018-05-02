@@ -9,7 +9,7 @@ public class GameManagerBehaviourScript : MonoBehaviour
     // Use this for initialization
     public int life;
     public int ringsLeft;
-    public int points;
+    public static int points;
     public Vector2 spawnPosition;
     public Vector2 checkpoint;
     public Transform ringSet;
@@ -31,12 +31,16 @@ public class GameManagerBehaviourScript : MonoBehaviour
 
     private bool updateScore = false;
 
+    public GameObject pausemenu;
+
     void Start()
     {
         life = 3;
         ringsLeft = ringSet.childCount;
-        points = 0;
-
+        if (Application.loadedLevel == 2)
+        {
+            points = 0;
+        }
         gate = GameObject.Find ("portal");
         gateCollider = gate.GetComponent<Collider2D>();
 
@@ -91,6 +95,14 @@ public class GameManagerBehaviourScript : MonoBehaviour
 
     
     }
+    public void addPoint(int toadd)
+    {
+        points += toadd;
+    }
+    public int getPoint()
+    {
+        return points;
+    }
 
      //UI Buttons
     public void NextLevelButton()
@@ -109,5 +121,14 @@ public class GameManagerBehaviourScript : MonoBehaviour
         Application.LoadLevel(1);
         GameObject b = GameObject.FindGameObjectWithTag("BouncyHome");
         Destroy(b);
+    }
+
+    public void pauseButton()
+    {
+        pausemenu.SetActive(true);
+    }
+    public void resumeButton()
+    {
+        pausemenu.SetActive(false);
     }
 }

@@ -20,7 +20,8 @@ public class CheckpointBehaviourScript : MonoBehaviour
     {
         GetComponent<SpriteRenderer>().sprite = catched;
         gmScript.checkpoint = transform.position;
-        gmScript.points += 500 * gmScript.life;
+        //gmScript.points += 500 * gmScript.life;
+        gmScript.addPoint(500 * gmScript.life);
         other.GetComponent<BouncyBehaviourScript>().checkpointSprite = other.GetComponent<SpriteRenderer>().sprite;
         GetComponent<Collider2D>().enabled = false;
     }

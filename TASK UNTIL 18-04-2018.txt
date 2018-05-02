@@ -1,7 +1,7 @@
 -thorn collisions -> trig                                 J - ok
 -gamemanager: life, rings left, point                     J - ok 
 -android apk                                              J - ok
--UI (pause, points, life rings left)                      J - ok (pause and rings left undone)
+-UI (pause, points, life rings left)                      J - ok (rings left)
 -android only landscape                                   J - ok 
 -Music (asset?, backround)	                              A - done
 -door open : rings left, collider, collider trigger       A - done
@@ -19,10 +19,10 @@ Bugs:
 - texture								       -done
 - 1 star level complete, 2 star 3 lifes, lifes >= 3 + extra lifes + getAll     -done
 - music in object ?							       -done
-- sum points of scenes 	
+- sum points of scenes 								-done
 - replay 1st level							       -done
 - particle oti nane 									done
-- pause menu: restart, homepage, resume
+- pause menu: restart, homepage, resume				-done
 
 Mario:
 - camera												done

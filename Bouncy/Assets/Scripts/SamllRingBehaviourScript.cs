@@ -30,7 +30,8 @@ public class SamllRingBehaviourScript : MonoBehaviour
                 GetComponent<AudioSource> ().clip = ringSoundEffect;
                 GetComponent<AudioSource> ().Play ();
                 gameManScript.ringsLeft--;
-                gameManScript.points += 500 * gameManScript.life;
+                //gameManScript.points += 500 * gameManScript.life;
+                gameManScript.addPoint(500 * gameManScript.life);
             }
             isEnable = false;
             this.GetComponent<SpriteRenderer>().sprite = rTop;

@@ -28,10 +28,12 @@ public class GameManagerBehaviourScript : MonoBehaviour
 
     public Text txtlifes;
     public Text txtpoint;
+    public Text txtrings;
 
     private bool updateScore = false;
 
     public GameObject pausemenu;
+
 
     void Start()
     {
@@ -92,6 +94,7 @@ public class GameManagerBehaviourScript : MonoBehaviour
 
         txtlifes.text = "X" + life.ToString();
         txtpoint.text = points.ToString();
+        txtrings.text = "X" + ringsLeft;
 
     
     }
@@ -122,13 +125,43 @@ public class GameManagerBehaviourScript : MonoBehaviour
         GameObject b = GameObject.FindGameObjectWithTag("BouncyHome");
         Destroy(b);
     }
-
     public void pauseButton()
     {
         pausemenu.SetActive(true);
+        GameObject bouncy = GameObject.FindGameObjectWithTag("BouncySmall");
+        if (bouncy == null)
+        {
+            bouncy = GameObject.FindGameObjectWithTag("BouncyBig");
+        }
+        bouncy.GetComponent<Rigidbody2D>().isKinematic = true;
+
+        GameObject[] thorns = GameObject.FindGameObjectsWithTag("thorn");
+        foreach(GameObject thorn in thorns)
+        {
+            if(thorn.GetComponent<Rigidbody2D>()!= null){
+                thorn.GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezeAll;
+            }
+        }
     }
     public void resumeButton()
     {
         pausemenu.SetActive(false);
+        GameObject bouncy = GameObject.FindGameObjectWithTag("BouncySmall");
+        if (bouncy == null)
+        {
+            bouncy = GameObject.FindGameObjectWithTag("BouncyBig");
+        }
+        bouncy.GetComponent<Rigidbody2D>().isKinematic = false;
+
+
+        GameObject[] thorns = GameObject.FindGameObjectsWithTag("thorn");
+        foreach (GameObject thorn in thorns)
+        {
+            if (thorn.GetComponent<Rigidbody2D>() != null)
+            {
+                thorn.GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezePositionX | RigidbodyConstraints2D.FreezeRotation;
+
+            }
+        }
     }
 }

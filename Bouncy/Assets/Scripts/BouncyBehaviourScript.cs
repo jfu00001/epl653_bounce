@@ -208,12 +208,6 @@ public class BouncyBehaviourScript : MonoBehaviour
             StartCoroutine(wait(2));
         }
 
-        if ((other.gameObject.tag == "pumper") || 
-            (other.gameObject.tag == "power_speed")|| 
-            (other.gameObject.tag == "deflater"))
-        {
-            collisionObjects++;
-        }
     }
 
     private IEnumerator wait(int sec)

@@ -22,7 +22,7 @@ public class GateBehaviourScript : MonoBehaviour
 	private GameObject rings;
 
 	public Transform powerUps;
-	public int powerUpsNum;
+	private int powerUpsNum;
 
 	private int gmLifes;
 	private bool lifeTag;
@@ -34,6 +34,7 @@ public class GateBehaviourScript : MonoBehaviour
 	{
 		gameManager = GameObject.Find ("GameManager");
 		gameManagerScript = gameManager.GetComponent<GameManagerBehaviourScript> ();
+		powerUpsNum = powerUps.childCount;
 		bouncyScript = bouncy.GetComponent<BouncyBehaviourScript>();
 		rings= GameObject.Find ("Rings");
 		lifeTag = false;
@@ -62,7 +63,6 @@ public class GateBehaviourScript : MonoBehaviour
 			{
 			secondStar.GetComponent<Image>().sprite = starSprite;
 			secondStar.GetComponent<Image>().color= myColor;
-
 			
 			if (bouncyScript.collisionObjects == powerUpsNum)
 			{
@@ -75,10 +75,7 @@ public class GateBehaviourScript : MonoBehaviour
 			}
 
 		}
-
-
-
-        
+	
 		levelComplete.SetActive(true);
 
         // level 3 completed => game completed => save score

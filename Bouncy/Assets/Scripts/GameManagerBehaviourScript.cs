@@ -13,7 +13,7 @@ public class GameManagerBehaviourScript : MonoBehaviour
     public Vector2 spawnPosition;
     public Vector2 checkpoint;
     public Transform ringSet;
-    
+
     public GameObject Bouncy;
     private BouncyBehaviourScript bouncyScript;
     public GameObject levelFail;
@@ -28,12 +28,13 @@ public class GameManagerBehaviourScript : MonoBehaviour
 
     public Text txtlifes;
     public Text txtpoint;
-    public Text txtrings;
 
     private bool updateScore = false;
 
     public GameObject pausemenu;
 
+    public RawImage ringTemplateUI;
+    private RawImage[] ringsUI;
 
     void Start()
     {
@@ -43,38 +44,45 @@ public class GameManagerBehaviourScript : MonoBehaviour
         {
             points = 0;
         }
-        gate = GameObject.Find ("portal");
+        gate = GameObject.Find("portal");
         gateCollider = gate.GetComponent<Collider2D>();
 
         bouncyScript = Bouncy.GetComponent<BouncyBehaviourScript>();
-        BouncySRender= Bouncy.GetComponent<SpriteRenderer>();
+        BouncySRender = Bouncy.GetComponent<SpriteRenderer>();
 
-        BouncyHome= GameObject.Find("BouncyHome");
-        BouncyHomeSRender = BouncyHome.GetComponent<SpriteRenderer> ();
+        BouncyHome = GameObject.Find("BouncyHome");
+        BouncyHomeSRender = BouncyHome.GetComponent<SpriteRenderer>();
         //Check if the Bouncy is big and load the appropriate sprite
-        if (Bouncy.tag == "BouncyBig") 
+        if (Bouncy.tag == "BouncyBig")
         {
-            
+
             BouncySRender.sprite = BouncyHome.transform.GetChild(0).gameObject.GetComponent<SpriteRenderer>().sprite;
         }
-        else 
+        else
         {
 
             BouncySRender.sprite = BouncyHomeSRender.sprite;
         }
 
-    
-        BouncyHomeSRender.enabled= false;
-        
+
+        BouncyHomeSRender.enabled = false;
+        ringsUI = new RawImage[ringsLeft];
+        ringsUI[0] = ringTemplateUI;
+        for (int i = 1; i < ringsLeft; i++)
+        {
+            ringsUI[i] = Instantiate(ringsUI[i - 1]);
+            ringsUI[i].transform.SetParent(ringsUI[0].transform, false);
+            ringsUI[i].transform.position = ringsUI[0].transform.position + new Vector3(12.5f * i, 0, 0);
+        }
     }
 
     // Update is called once per frame
     void Update()
     {
         //If there are no rings open the gate and disable bouncy
-        if (ringsLeft == 0) 
+        if (ringsLeft == 0)
         {
-            gateAnimator.SetBool ("setActive", true);
+            gateAnimator.SetBool("setActive", true);
             gateCollider.enabled = false;
         }
 
@@ -94,9 +102,11 @@ public class GameManagerBehaviourScript : MonoBehaviour
 
         txtlifes.text = "X" + life.ToString();
         txtpoint.text = points.ToString();
-        txtrings.text = "X" + ringsLeft;
 
-    
+        for (int i = ringsLeft; i < ringsUI.Length; i++)
+        {
+            ringsUI[i].gameObject.SetActive(false);
+        }
     }
     public void addPoint(int toadd)
     {
@@ -107,7 +117,7 @@ public class GameManagerBehaviourScript : MonoBehaviour
         return points;
     }
 
-     //UI Buttons
+    //UI Buttons
     public void NextLevelButton()
     {
         int nextLevel = Application.loadedLevel + 1;
@@ -136,9 +146,10 @@ public class GameManagerBehaviourScript : MonoBehaviour
         bouncy.GetComponent<Rigidbody2D>().isKinematic = true;
 
         GameObject[] thorns = GameObject.FindGameObjectsWithTag("thorn");
-        foreach(GameObject thorn in thorns)
+        foreach (GameObject thorn in thorns)
         {
-            if(thorn.GetComponent<Rigidbody2D>()!= null){
+            if (thorn.GetComponent<Rigidbody2D>() != null)
+            {
                 thorn.GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezeAll;
             }
         }

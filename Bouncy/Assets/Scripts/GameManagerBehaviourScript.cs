@@ -34,18 +34,22 @@ public class GameManagerBehaviourScript : MonoBehaviour
     public GameObject pausemenu;
 
     public RawImage ringTemplateUI;
-    private RawImage[] ringsUI;
+    public RawImage[] ringsUI;
+    public int collisionObjects;
+    public bool lifetag;
 
     void Start()
     {
         life = 3;
+        lifetag = false;
+        collisionObjects = 0;
         ringsLeft = ringSet.childCount;
         if (Application.loadedLevel == 2)
         {
             points = 0;
         }
         gate = GameObject.Find("portal");
-        gateCollider = gate.GetComponent<Collider2D>();
+        gateCollider = gate.GetComponent<BoxCollider2D>();
 
         bouncyScript = Bouncy.GetComponent<BouncyBehaviourScript>();
         BouncySRender = Bouncy.GetComponent<SpriteRenderer>();
@@ -72,7 +76,7 @@ public class GameManagerBehaviourScript : MonoBehaviour
         {
             ringsUI[i] = Instantiate(ringsUI[i - 1]);
             ringsUI[i].transform.SetParent(ringsUI[0].transform, false);
-            ringsUI[i].transform.position = ringsUI[0].transform.position + new Vector3(12.5f * i, 0, 0);
+            ringsUI[i].transform.position = ringsUI[0].transform.position + new Vector3(35f * i, 0, 0);
         }
     }
 
@@ -82,8 +86,9 @@ public class GameManagerBehaviourScript : MonoBehaviour
         //If there are no rings open the gate and disable bouncy
         if (ringsLeft == 0)
         {
-            gateAnimator.SetBool("setActive", true);
             gateCollider.enabled = false;
+            
+            gateAnimator.SetBool("setActive", true);
         }
 
         if (life == 0)
@@ -103,10 +108,10 @@ public class GameManagerBehaviourScript : MonoBehaviour
         txtlifes.text = "X" + life.ToString();
         txtpoint.text = points.ToString();
 
-        for (int i = ringsLeft; i < ringsUI.Length; i++)
-        {
-            ringsUI[i].gameObject.SetActive(false);
-        }
+        //for (int i = ringsLeft; i < ringsUI.Length; i++)
+        //{
+        //    ringsUI[i].gameObject.SetActive(false);
+        //}
     }
     public void addPoint(int toadd)
     {

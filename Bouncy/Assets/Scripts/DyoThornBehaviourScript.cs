@@ -3,7 +3,6 @@ using System.Collections;
 
 public class DyoThornBehaviourScript : MonoBehaviour
 {
-
     // Use this for initialization
     public float speed;
     private Rigidbody2D rb;

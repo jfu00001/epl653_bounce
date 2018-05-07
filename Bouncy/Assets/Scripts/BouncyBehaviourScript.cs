@@ -38,8 +38,6 @@ public class BouncyBehaviourScript : MonoBehaviour
         onRing = false;
         colBounceBlock = false;
 
-       
-
         gameManager = GameObject.Find("GameManager");
         gmScript = gameManager.GetComponent<GameManagerBehaviourScript>();
 
@@ -70,7 +68,8 @@ public class BouncyBehaviourScript : MonoBehaviour
         bool jump = CrossPlatformInputManager.GetButton("Jump");
 
         // jump and not on water
-        if (jump && rb.gravityScale > 0) { 
+        if (jump && rb.gravityScale > 0)
+        {
             rb.gravityScale = 1;
         }
 
@@ -151,7 +150,6 @@ public class BouncyBehaviourScript : MonoBehaviour
         {
             playSound(collectableSoundEffect);
             other.gameObject.SetActive(false);
-           // gmScript.points += 1000 * gmScript.life;
             gmScript.addPoint(1000 * gmScript.life);
             gmScript.life++;
             gmScript.collisionObjects++;
@@ -160,7 +158,6 @@ public class BouncyBehaviourScript : MonoBehaviour
         if (other.gameObject.tag == "checkpoint")
         {
             playSound(collectableSoundEffect);
-            //gmScript.points += 500 * gmScript.life;
             gmScript.addPoint(500 * gmScript.life);
             gmScript.collisionObjects++;
         }
@@ -206,7 +203,6 @@ public class BouncyBehaviourScript : MonoBehaviour
             this.GetComponent<SpriteRenderer>().sprite = popSprite;
             StartCoroutine(wait(2));
         }
-
     }
 
     private IEnumerator wait(int sec)

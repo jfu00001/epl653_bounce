@@ -1,11 +1,9 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
-
 using System.Collections;
 
 public class GameManagerBehaviourScript : MonoBehaviour
 {
-
     // Use this for initialization
     public int life;
     public int ringsLeft;
@@ -59,15 +57,12 @@ public class GameManagerBehaviourScript : MonoBehaviour
         //Check if the Bouncy is big and load the appropriate sprite
         if (Bouncy.tag == "BouncyBig")
         {
-
             BouncySRender.sprite = BouncyHome.transform.GetChild(0).gameObject.GetComponent<SpriteRenderer>().sprite;
         }
         else
         {
-
             BouncySRender.sprite = BouncyHomeSRender.sprite;
         }
-
 
         BouncyHomeSRender.enabled = false;
         ringsUI = new RawImage[ringsLeft];
@@ -87,7 +82,6 @@ public class GameManagerBehaviourScript : MonoBehaviour
         if (ringsLeft == 0)
         {
             gateCollider.enabled = false;
-            
             gateAnimator.SetBool("setActive", true);
         }
 
@@ -103,20 +97,19 @@ public class GameManagerBehaviourScript : MonoBehaviour
             }
         }
         else
+        {
             updateScore = false;
+        }
 
         txtlifes.text = "X" + life.ToString();
         txtpoint.text = points.ToString();
-
-        //for (int i = ringsLeft; i < ringsUI.Length; i++)
-        //{
-        //    ringsUI[i].gameObject.SetActive(false);
-        //}
     }
+
     public void addPoint(int toadd)
     {
         points += toadd;
     }
+
     public int getPoint()
     {
         return points;
@@ -140,6 +133,7 @@ public class GameManagerBehaviourScript : MonoBehaviour
         GameObject b = GameObject.FindGameObjectWithTag("BouncyHome");
         Destroy(b);
     }
+
     public void pauseButton()
     {
         pausemenu.SetActive(true);
@@ -159,6 +153,7 @@ public class GameManagerBehaviourScript : MonoBehaviour
             }
         }
     }
+
     public void resumeButton()
     {
         pausemenu.SetActive(false);
@@ -169,14 +164,12 @@ public class GameManagerBehaviourScript : MonoBehaviour
         }
         bouncy.GetComponent<Rigidbody2D>().isKinematic = false;
 
-
         GameObject[] thorns = GameObject.FindGameObjectsWithTag("thorn");
         foreach (GameObject thorn in thorns)
         {
             if (thorn.GetComponent<Rigidbody2D>() != null)
             {
                 thorn.GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezePositionX | RigidbodyConstraints2D.FreezeRotation;
-
             }
         }
     }

@@ -9,13 +9,12 @@ public class exitWater : MonoBehaviour
         if (collision.gameObject.CompareTag("BouncySmall"))
         {
             StartCoroutine(wait());
-            GameObject.Find("enter water").GetComponent<BoxCollider2D>().isTrigger = true;
         }
     }
     private IEnumerator wait()
     {
         GetComponent<Collider2D>().enabled = false;
-        yield return new WaitForSeconds(0.5F);
+        yield return new WaitForSeconds(1);
         GetComponent<Collider2D>().enabled = true;
     }
 
@@ -27,7 +26,7 @@ public class exitWater : MonoBehaviour
             Rigidbody2D rb = collision.gameObject.GetComponent<Rigidbody2D>();
             rb.gravityScale = 1;
             rb.velocity = new Vector2(rb.velocity.x, 0);
-            gameObject.GetComponent<BoxCollider2D>().isTrigger = false;
+            GetComponent<BoxCollider2D>().isTrigger = false;
         }
     }
 }

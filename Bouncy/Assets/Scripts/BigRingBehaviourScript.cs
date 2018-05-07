@@ -9,7 +9,7 @@ public class BigRingBehaviourScript : MonoBehaviour
     public bool isEnable;
     private GameObject gameManager;
     private GameManagerBehaviourScript gameManScript;
-    public AudioClip ringSoundEffect;  
+    public AudioClip ringSoundEffect;
 
     void Start()
     {
@@ -18,18 +18,14 @@ public class BigRingBehaviourScript : MonoBehaviour
         gameManScript = gameManager.GetComponent<GameManagerBehaviourScript>();
     }
 
-    // Update is called once per frame
-    void Update() { }
-
     void OnTriggerEnter2D(Collider2D other)
     {
         if (isEnable)
         {
-            GetComponent<AudioSource> ().clip = ringSoundEffect;
-            GetComponent<AudioSource> ().Play ();
+            GetComponent<AudioSource>().clip = ringSoundEffect;
+            GetComponent<AudioSource>().Play();
             gameManScript.ringsLeft--;
             gameManScript.ringsUI[gameManScript.ringsLeft].gameObject.SetActive(false);
-            //gameManScript.points += 500 * gameManScript.life;
             gameManScript.addPoint(500 * gameManScript.life);
         }
         isEnable = false;

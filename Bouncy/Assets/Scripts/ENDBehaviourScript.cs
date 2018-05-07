@@ -2,10 +2,9 @@
 using System.Collections;
 using UnityEngine.UI;
 
-public class ENDBehaviourScript : MonoBehaviour {
-
+public class ENDBehaviourScript : MonoBehaviour
+{
     public GameObject levelComplete;
-   
 
     private GameManagerBehaviourScript gameManagerScript;
     private GameObject gameManager;
@@ -15,10 +14,8 @@ public class ENDBehaviourScript : MonoBehaviour {
     public Button secondStar;
     public Button thirdStar;
 
-
     public Transform powerUps;
     private int powerUpsNum;
-
 
     private bool saveScore;
 
@@ -30,14 +27,9 @@ public class ENDBehaviourScript : MonoBehaviour {
         powerUpsNum = powerUps.childCount;
         saveScore = false;
     }
-    void Update()
-    {
-        print(gameManagerScript.collisionObjects);
-    }
 
     void OnTriggerEnter2D(Collider2D other)
     {
-
         if (GameObject.FindGameObjectWithTag("BouncySmall"))
         {
             GameObject.FindGameObjectWithTag("BouncySmall").GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezeAll;
@@ -46,7 +38,6 @@ public class ENDBehaviourScript : MonoBehaviour {
         {
             GameObject.FindGameObjectWithTag("BouncyBig").GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezeAll;
         }
-
 
         Color myColor = new Color32(253, 255, 0, 248);
 

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine.UI;
 using UnityEngine;
 
-public class UI_Helper : MonoBehaviour
+public class UI_Leaderboard : MonoBehaviour
 {
     public GameObject textTemplate;
 

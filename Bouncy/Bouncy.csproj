@@ -76,14 +76,14 @@
     <Compile Include="Assets\Scripts\CheckpointBehaviourScript.cs" />
     <Compile Include="Assets\Scripts\DeflaterBehaviourScript.cs" />
     <Compile Include="Assets\Scripts\DyoThornBehaviourScript.cs" />
+    <Compile Include="Assets\Scripts\ENDBehaviourScript.cs" />
     <Compile Include="Assets\Scripts\GameManagerBehaviourScript.cs" />
-    <Compile Include="Assets\Scripts\GateBehaviourScript.cs" />
     <Compile Include="Assets\Scripts\HighScoreManager.cs" />
     <Compile Include="Assets\Scripts\PowerspeedBehaviourScript.cs" />
     <Compile Include="Assets\Scripts\PumperBehaviourScript.cs" />
-    <Compile Include="Assets\Scripts\SamllRingBehaviourScript.cs" />
     <Compile Include="Assets\Scripts\SceneLoader.cs" />
     <Compile Include="Assets\Scripts\SceneLoaderWithTimer.cs" />
+    <Compile Include="Assets\Scripts\SmallRingBehaviourScript.cs" />
     <Compile Include="Assets\Scripts\Standard Assets\CrossPlatformInput\Scripts\AxisTouchButton.cs" />
     <Compile Include="Assets\Scripts\Standard Assets\CrossPlatformInput\Scripts\ButtonHandler.cs" />
     <Compile Include="Assets\Scripts\Standard Assets\CrossPlatformInput\Scripts\CrossPlatformInputManager.cs" />
@@ -95,7 +95,7 @@
     <Compile Include="Assets\Scripts\Standard Assets\CrossPlatformInput\Scripts\TiltInput.cs" />
     <Compile Include="Assets\Scripts\Standard Assets\CrossPlatformInput\Scripts\TouchPad.cs" />
     <Compile Include="Assets\Scripts\Standard Assets\CrossPlatformInput\Scripts\VirtualInput.cs" />
-    <Compile Include="Assets\Scripts\UI_Helper.cs" />
+    <Compile Include="Assets\Scripts\UI_Leaderboard.cs" />
     <Compile Include="Assets\Scripts\bounceHomepage.cs" />
     <Compile Include="Assets\Scripts\enterWater.cs" />
     <Compile Include="Assets\Scripts\exitWater.cs" />

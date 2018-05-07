@@ -5,25 +5,21 @@ public class enterWater : MonoBehaviour
 {
     void OnCollisionEnter2D(Collision2D collision)
     {
-        // if not trigger enable
-        if (collision.gameObject.CompareTag("BouncyBig"))
-        {
-            GetComponent<BoxCollider2D>().isTrigger = true;
-        }
-    }
- 
-    void OnTriggerExit2D(Collider2D collision)
-    {
-        // if trigger disable to not pass
-        if (collision.gameObject.CompareTag("BouncySmall"))
-        {
-            GetComponent<BoxCollider2D>().isTrigger = false;
-        }   
-        // pass and update exit
         if (collision.gameObject.CompareTag("BouncyBig"))
         {
             collision.gameObject.GetComponent<Rigidbody2D>().gravityScale = -0.25f;
             GameObject.Find("exit water").GetComponent<BoxCollider2D>().isTrigger = true;
+            StartCoroutine(wait());
         }
+        if (collision.gameObject.CompareTag("BouncySmall") && collision.transform.position.y > transform.position.y)
+        {
+            StartCoroutine(wait());
+        }
+    }
+    private IEnumerator wait()
+    {
+        GetComponent<Collider2D>().enabled = false;
+        yield return new WaitForSeconds(1);
+        GetComponent<Collider2D>().enabled = true;
     }
 }

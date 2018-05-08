@@ -158,8 +158,6 @@ public class BouncyBehaviourScript : MonoBehaviour
         if (other.gameObject.tag == "checkpoint")
         {
             playSound(collectableSoundEffect);
-            gmScript.addPoint(500 * gmScript.life);
-            gmScript.collisionObjects++;
         }
     }
 

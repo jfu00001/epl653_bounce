@@ -48,6 +48,7 @@ public class BouncyBehaviourScript : MonoBehaviour
 
         bouncyHome = GameObject.Find("BouncyHome");
         bouncyHomeSRender = bouncyHome.GetComponent<SpriteRenderer>();
+        bouncyHome.GetComponent<CircleCollider2D>().enabled = false;
         bouncyHome.GetComponent<Rigidbody2D>().isKinematic = true;
         bouncyHome.GetComponent<AudioSource>().enabled = false;
         bouncyHome.GetComponent<bounceHomepage>().enabled = false;

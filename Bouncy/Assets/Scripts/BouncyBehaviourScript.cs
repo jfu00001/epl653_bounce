@@ -26,6 +26,8 @@ public class BouncyBehaviourScript : MonoBehaviour
     private GameObject bouncyHome;
     private SpriteRenderer bouncyHomeSRender;
 
+    private int maxFallvelocity = -20, maxJumpvelocity = 20;
+
     // Use this for initialization
     void Start()
     {
@@ -86,7 +88,11 @@ public class BouncyBehaviourScript : MonoBehaviour
             if (colBounceBlock)
             {
                 rb.AddForce(new Vector2(0, yForce), ForceMode2D.Impulse);
-                yForce += 1;
+                // bounce jump upper limit
+                if (yForce < 15)
+                {
+                    yForce += 1;
+                }
                 colBounceBlock = false;
             }
             else
@@ -142,6 +148,16 @@ public class BouncyBehaviourScript : MonoBehaviour
             GetComponent<Collider2D>().sharedMaterial.bounciness = 0;
             GetComponent<Collider2D>().enabled = false;
             GetComponent<Collider2D>().enabled = true;
+        }
+
+        // velocity y limit check
+        if (rb.velocity.y < maxFallvelocity)
+        {
+            rb.velocity = new Vector2(rb.velocity.x, maxFallvelocity);
+        }
+        if (rb.velocity.y > maxJumpvelocity)
+        {
+            rb.velocity = new Vector2(rb.velocity.x, maxJumpvelocity);
         }
     }
 
